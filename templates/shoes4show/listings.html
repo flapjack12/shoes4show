@@ -1,0 +1,20 @@
+{% extends 'shoes4show/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Search results
+{% endblock %}
+
+{% block body_block %}
+    {% if result_list %}
+    <ul>
+        {% for listing in result_list %}
+            <a href="{% url 'shoes4show:show_item' listing.slug %}">{{ listing.name }}</a>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <div>
+            <h1> No items found </h1>
+        </div>
+    {% endif %}
+{% endblock %}

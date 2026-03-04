@@ -1,0 +1,30 @@
+{% extends 'shoes4show/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    {% if item %}
+        {{ item.name }}
+    {% else %}
+        Unknown item
+    {% endif %}
+{% endblock %}
+
+{% block body_block %}
+    {% if item %}
+       <h1>{{ item.name }}</h1>
+            {% if reviews %}
+                <ul>
+                    {% for review in reviews %}
+                        <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>No reviews currently in item.</strong>
+            {% endif %}
+        {% if user.is_authenticated %}                 
+            <a href="{% url 'shoes4show:add_page' item.slug %}">Add Page</a> <br/>
+        {% endif %}
+    {% else %}
+        The specified category does not exist.
+    {% endif %}
+{% endblock %}
