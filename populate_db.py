@@ -7,8 +7,8 @@ from shoes4show.models import Item, Review
 
 def populate():
     items = [
-        {"name":"New Balance trainers", "description":"New Balance 530 trainers in white and grey", "category":Item.SHOES_CATEGORIES.get("SN")},
-        {"name":"adidas slides", "description":"adidas Training Adilette Aqua slides in black", "category":Item.SHOES_CATEGORIES.get("SA")},
+        {"name":"New Balance trainers", "description":"New Balance 530 trainers in white and grey", "category":"SN"},
+        {"name":"adidas slides", "description":"adidas Training Adilette Aqua slides in black", "category":"SA"},
     ]
 
     for item in items:
