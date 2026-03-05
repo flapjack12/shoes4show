@@ -9,10 +9,20 @@
         <h1>Welcome</h1>
 <div>
     <div>
-        <form class="form-inline" id="user-form" method="post" action="{% url 'shoes4show:search' %}">
+        <form class="form-inline" id="search_form" method="post" action="{% url 'shoes4show:search' %}">
         {% csrf_token %}
-        <div class="form-group">
+        <div class="text_search">
             <input class="form-control" type="text" size="50" name="query" id="query" spellcheck="true"/>
+        </div>
+        <div>
+            <select class="category_choice" id="category" name="category" required="False">
+                <option value="none" selected disabled hidden>
+                    Select an Option
+                </option>
+                {% for choice, choice_value in category_choices.items %}
+                    <option value={{choice}}>{{ choice_value }}</option>
+                {% endfor %}
+            </select>
         </div>
         <button class="btn btn-primary" type="submit" name="submit">Search</button>
         </form>

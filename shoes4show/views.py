@@ -18,6 +18,7 @@ def index(request):
     context_dict['boldmessage'] = "Welcome message"
     context_dict['items'] = item_list
     context_dict['reviews'] = reviews_list
+    context_dict['category_choices'] = Item.SHOES_CATEGORIES
     visitor_cookie_handler(request)
     response = render(request, 'shoes4show/index.html', context=context_dict)
     return response
@@ -156,10 +157,9 @@ def search(request):
     result_list = []
 
     if request.method == "POST":
-        query = request.POST["query"].strip().split()
-        if query:
-            result_list = run_query(query)
+        result_list = run_query(request)
     return render(request, 'shoes4show/listings.html', {"result_list":result_list})
+
 
 def about(request):
     context_dict = {}
