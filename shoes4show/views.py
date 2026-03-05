@@ -23,15 +23,6 @@ def index(request):
     return response
 
 
-def about(request):
-    context_dict = {}
-    visitor_cookie_handler(request)
-    context_dict['visits'] =  request.session['visits']
-
-    
-    return render(request, 'shoes4show/about.html', context=context_dict)
-
-
 def show_item(request, category_name_slug):
     context_dict = {}
 
@@ -169,3 +160,23 @@ def search(request):
         if query:
             result_list = run_query(query)
     return render(request, 'shoes4show/listings.html', {"result_list":result_list})
+
+def about(request):
+    context_dict = {}
+    
+    return render(request, 'shoes4show/about.html', context=context_dict)
+
+def contact_us(request):
+    context_dict = {}
+    
+    return render(request, 'shoes4show/contact_us.html', context=context_dict)
+
+def site_map(request):
+    context_dict = {}
+    
+    return render(request, 'shoes4show/site_map.html', context=context_dict)
+
+def shoe_size_conversion(request):
+    context_dict = {}
+    
+    return render(request, 'shoes4show/shoe_size_conversion.html', context=context_dict)
