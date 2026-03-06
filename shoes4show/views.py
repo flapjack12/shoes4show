@@ -47,7 +47,7 @@ def add_item(request):
                 return redirect(reverse('shoes4show:index'))
             else:
                 print(form.errors)
-        return render(request, 'shoes4show/add_category.html', {'form':form})
+        return render(request, 'shoes4show/add_item.html', {'form':form})
 
 def add_page(request, category_name_slug):
     try:
