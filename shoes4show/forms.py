@@ -8,25 +8,23 @@ from shoes4show.models import Item, Review, UserProfile
 class ItemForm(forms.ModelForm):
     name = forms.CharField(
         max_length=Item.NAME_MAX_LENGTH,
-        help_text="Please enter the item name.",
+        help_text="Please enter the item name."
     )
-    description = forms.CharField(
-        required=False,
-        widget=forms.Textarea,
-        help_text="Please enter the description.",
-    )
+
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
+
     category = forms.ChoiceField(
         required=False,
         choices=Item.SHOES_CATEGORIES,
-        help_text="Choose a category.",
+        help_text="Choose a category."
     )
 
     class Meta:
         model = Item
-        fields = ("name", "description", "category")
+        fields = ("name",)
 
     def clean(self):
         cleaned_data = super().clean()
