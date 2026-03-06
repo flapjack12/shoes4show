@@ -14,6 +14,8 @@ Login
 <form method="post" action="{% url 'shoes4show:login' %}">
     {% csrf_token %}
 
+    <input type="hidden" name="next" value="{{ request.GET.next }}">
+
     <p>
         Username:
         <input type="text" name="username" size="50">
