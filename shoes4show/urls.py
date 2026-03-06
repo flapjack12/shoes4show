@@ -8,7 +8,7 @@ urlpatterns = [
     path("aboutus/", views.about, name="aboutus"),
 
     path("category/<slug:category_name_slug>/", views.show_item, name="show_item"),
-    path("add_category/", views.add_item, name="add_item"),
+    path("add_item/", views.add_item, name="add_item"),
     path("category/<slug:category_name_slug>/add_page/", views.add_page, name="add_page"),
 
     path("register/", views.register, name="register"),

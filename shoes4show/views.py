@@ -60,7 +60,7 @@ def add_item(request):
         else:
             print(form.errors)
 
-    return render(request, "shoes4show/add_category.html", {"form": form})
+    return render(request, "shoes4show/add_item.html", {"form": form})
 
 
 @login_required
