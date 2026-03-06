@@ -3,35 +3,38 @@
 {% load shoes4show_template_tags %}
 
 <html>
-    <head>
-        <title>Rango - 
-            {% block title_block %}
-                How to Tango with Django!
-            {% endblock %}
-        </title>
-    </head>
-    <body>
-        <div>
-            {% block body_block %}    
-            {% endblock %}
-        </div>
-        <hr />
-        <div>
-            <ul>
-                {% if user.is_authenticated %}                
-                    <li><a href="{% url 'shoes4show:restricted' %}">Restricted Page</a></li>
-                    <li><a href="{% url 'shoes4show:logout' %}">Logout</a></li>
-                    <li><a href="{% url 'shoes4show:add_item' %}">Add New Item</a></li>
-                {% else %}        
-                    <li><a href="{% url 'shoes4show:register' %}">Sign Up</a></li>
-                    <li><a href="{% url 'shoes4show:login' %}">Login</a></li>
-                {% endif %}
-                <li><a href="{% url 'shoes4show:add_item' %}">Add New Item</a></li>
-                <li><a href="{% url 'shoes4show:aboutus' %}">About</a></li>
-                <li><a href="{% url 'shoes4show:index' %}">Index</a></li>
-            </ul>
-        </div>
+<head>
+    <title>
+        Shoes4Show -
+        {% block title_block %}
+            Home
+        {% endblock %}
+    </title>
+</head>
 
-    </body>
+<body>
 
+<div>
+    {% block body_block %}
+    {% endblock %}
+</div>
+
+<hr>
+
+<div>
+    <ul>
+        <li><a href="{% url 'shoes4show:index' %}">Home</a></li>
+        <li><a href="{% url 'shoes4show:aboutus' %}">About Us</a></li>
+
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'shoes4show:account' %}">Account</a></li>
+            <li><a href="{% url 'shoes4show:logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'shoes4show:register' %}">Register</a></li>
+            <li><a href="{% url 'shoes4show:login' %}">Login</a></li>
+        {% endif %}
+    </ul>
+</div>
+
+</body>
 </html>

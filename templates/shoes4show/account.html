@@ -1,0 +1,13 @@
+{% extends 'shoes4show/base.html' %}
+
+{% block title_block %}
+Account
+{% endblock %}
+
+{% block body_block %}
+<h1>My Account</h1>
+
+<p><strong>Username:</strong> {{ user.username }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+<p><strong>Badge:</strong> No Badge</p>
+{% endblock %}
