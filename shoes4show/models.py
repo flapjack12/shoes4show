@@ -34,12 +34,17 @@ class Review(models.Model):
 
     def __str__(self):
         return self.title
-    
+
+
+def user_directory_path(instance,filename):
+    return f'{instance.user.username}/profilepic/{filename}'
+
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    picture = models.ImageField(upload_to=user_directory_path, blank=True)
 
     def __str__(self):
         return self.user.username
