@@ -163,16 +163,25 @@ def search(request):
 
 def about(request):
     context_dict = {}
+    context_dict['category_choices'] = Item.SHOES_CATEGORIES
     
     return render(request, 'shoes4show/about.html', context=context_dict)
 
+def list(request):
+    context_dict = {}
+    context_dict['category_choices'] = Item.SHOES_CATEGORIES
+    
+    return render(request, 'shoes4show/list.html', context=context_dict)
+
 def contact_us(request):
     context_dict = {}
+    context_dict['category_choices'] = Item.SHOES_CATEGORIES
     
     return render(request, 'shoes4show/contact_us.html', context=context_dict)
 
 def site_map(request):
     context_dict = {}
+    context_dict['category_choices'] = Item.SHOES_CATEGORIES
     
     return render(request, 'shoes4show/site_map.html', context=context_dict)
 

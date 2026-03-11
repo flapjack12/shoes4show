@@ -14,7 +14,8 @@ urlpatterns = [
     path('logout/', views.user_logout, name='logout'),    
     path('search/', views.search, name='search'),
     path('about/', views.about, name='about'),
-    path('contact_us/', views.restricted, name='contact_us'),
-    path('site_map/', views.user_logout, name='site_map'),
-    path('shoe_size_conversion/', views.search, name='shoe_size_conversion')
+    path('contact_us/', views.contact_us, name='contact_us'),
+    path('site_map/', views.site_map, name='site_map'),
+    path('shoe_size_conversion/', views.shoe_size_conversion, name='shoe_size_conversion'),
+    path('list/', views.list, name='list')
 ]
