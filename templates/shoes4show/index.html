@@ -16,8 +16,8 @@
         </div>
         <div>
             <select class="category_choice" id="category" name="category" required="False">
-                <option value="none" selected disabled hidden>
-                    Select an Option
+                <option value="any" selected>
+                    All
                 </option>
                 {% for choice, choice_value in category_choices.items %}
                     <option value={{choice}}>{{ choice_value }}</option>

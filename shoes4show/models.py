@@ -5,10 +5,19 @@ from django.contrib.auth.models import User
 class Item(models.Model):
     NAME_MAX_LENGTH = 128
     SHOES_CATEGORIES = {
-        "HE":"Heels",
-        "SN":"Sneakers",
-        "SA":"Sandals",
-    }
+    "HE": "Heels",
+    "SN": "Sneakers",
+    "SA": "Sandals",
+    "BO": "Boots",
+    "LO": "Loafers",
+    "FS": "Formal Shoes",
+    "SL": "Slippers",
+    "FL": "Flats",
+    "PU": "Pumps",
+    "AT": "Athletic Shoes",
+    "CL": "Clogs",
+    "ES": "Espadrilles",
+}
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
     description = models.TextField(default="default description")
     views = models.IntegerField(default=0)
