@@ -39,6 +39,9 @@ def show_item(request, category_name_slug):
 
 
 def add_listing(request):
+        context_dict={}
+        context_dict['category_choices'] = Item.SHOES_CATEGORIES
+        
         form = ItemForm()
         if request.method == 'POST':
             form = ItemForm(request.POST, request.FILES)
@@ -47,7 +50,10 @@ def add_listing(request):
                 return redirect(reverse('shoes4show:index'))
             else:
                 print(form.errors)
-        return render(request, 'shoes4show/add_listing.html', {'form':form})
+
+        context_dict['form'] = form
+        
+        return render(request, 'shoes4show/add_listing.html', context=context_dict)
 
 
 
@@ -158,5 +164,6 @@ def site_map(request):
 
 def shoe_size_conversion(request):
     context_dict = {}
+    context_dict['category_choices'] = Item.SHOES_CATEGORIES
     
     return render(request, 'shoes4show/shoe_size_conversion.html', context=context_dict)

@@ -14,7 +14,6 @@ class ItemForm(forms.ModelForm):
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
     category = forms.ChoiceField(required=False, choices=Item.SHOES_CATEGORIES, help_text="Choose a category:")
-    
 
     class Meta:
         model = Item

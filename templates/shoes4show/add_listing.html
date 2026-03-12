@@ -1,25 +1,26 @@
 {% extends "shoes4show/base.html" %}
 {% load static %}
 
-{% block title_block %}
-    Add an item
-{% endblock %}
-
 {% block body_block %}
-    <form id="category_form" method="post" action="{% url 'shoes4show:add_listing' %}" enctype="multipart/form-data">
-        {%csrf_token%}
-        {% for hidden in form.hidden_fields %}
-            {{hidden}}
-        {% endfor %}
+    <diiv class="d-flex flex-column align-items-center pb-5">
+        <div class="mb-5" style="font-size: 30px;">
+            Upload an item!
+        </div>
+        <form id="category_form" method="post" action="{% url 'shoes4show:add_listing' %}" enctype="multipart/form-data">
+            {%csrf_token%}
+            {% for hidden in form.hidden_fields %}
+                {{hidden}}
+            {% endfor %}
 
-	<!-- STYLING -->
-        {% for field in form.visible_fields %}
-	    <div class="form-field mb-3">
-                {{field.help_text}}
-                {{field}}
-		{{field.errors}}
-            </div>
-        {% endfor %}
-        <input type="submit" name="submit" value="Upload item" />
-    </form>
+	    <!-- STYLING -->
+            {% for field in form.visible_fields %}
+	        <div class="form-field mb-5">
+                    {{field.help_text}}
+                    {{field}}
+		    {{field.errors}}
+                </div>
+            {% endfor %}
+            <input type="submit" name="submit" value="Upload" />
+        </form>
+    </div>
 {% endblock %}

@@ -6,11 +6,11 @@ from django.core.validators import MaxLengthValidator
 
 class Item(models.Model):
     NAME_MAX_LENGTH = 128
-    SHOES_CATEGORIES = [
-        ("HE","Heels"),
-        ("SN","Sneakers"),
-        ("SA","Sandals"),
-    ]
+    SHOES_CATEGORIES = {
+        "HE":"Heels",
+        "SN":"Sneakers",
+        "SA":"Sandals",
+    }
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
     description = models.TextField(default="default description", validators=[MaxLengthValidator(250)])
     image = models.ImageField(upload_to='listing_images/') #where are we uploading to?
