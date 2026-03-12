@@ -38,43 +38,17 @@ def show_item(request, category_name_slug):
     return render(request, 'shoes4show/category.html', context=context_dict)
 
 
-def add_item(request):
+def add_listing(request):
         form = ItemForm()
         if request.method == 'POST':
-            form = ItemForm(request.POST)
+            form = ItemForm(request.POST, request.FILES)
             if form.is_valid():
                 form.save(commit=True)
                 return redirect(reverse('shoes4show:index'))
             else:
                 print(form.errors)
-        return render(request, 'shoes4show/add_category.html', {'form':form})
+        return render(request, 'shoes4show/add_listing.html', {'form':form})
 
-def add_page(request, category_name_slug):
-    try:
-        category = Item.objects.get(slug=category_name_slug)
-    except Item.DoesNotExist:
-        category = None
-
-    if category is None:
-        return redirect(reverse('shoes4show:index'))
-    
-    if request.user.is_authenticated:
-        form = ReviewForm()
-        if request.method == 'POST':
-            form = ReviewForm(request.POST)
-            if form.is_valid():
-                if category:
-                    page=form.save(commit=False)
-                    page.category = category
-                    page.views = 0
-                    page.save()
-                    return redirect(reverse('shoes4show:show_item', kwargs={'category_name_slug': category_name_slug}))
-            else:
-                print(form.errors)
-        context_dict = {'form': form, 'category': category}
-        return render(request, 'shoes4show/add_page.html', context=context_dict)
-    else:
-        return redirect(reverse('shoes4show:login'))
 
 
 def register(request):
@@ -167,11 +141,6 @@ def about(request):
     
     return render(request, 'shoes4show/about.html', context=context_dict)
 
-def list(request):
-    context_dict = {}
-    context_dict['category_choices'] = Item.SHOES_CATEGORIES
-    
-    return render(request, 'shoes4show/list.html', context=context_dict)
 
 def contact_us(request):
     context_dict = {}
@@ -179,11 +148,13 @@ def contact_us(request):
     
     return render(request, 'shoes4show/contact_us.html', context=context_dict)
 
+
 def site_map(request):
     context_dict = {}
     context_dict['category_choices'] = Item.SHOES_CATEGORIES
     
     return render(request, 'shoes4show/site_map.html', context=context_dict)
+
 
 def shoe_size_conversion(request):
     context_dict = {}

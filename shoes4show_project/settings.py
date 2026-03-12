@@ -118,7 +118,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, Images) + URLS / MEDIA
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 STATICFILES_DIRS = [STATIC_DIR, ]
 
@@ -126,6 +126,5 @@ STATIC_URL = "/static/"
 
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
-
 
 LOGIN_URL = 'shoes4show:login'
