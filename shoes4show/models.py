@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 
 class Item(models.Model):
     NAME_MAX_LENGTH = 128
+    SORTING_OPTIONS = {"price":"price ascending", "-price":"price descending", 
+                       "likes":"likes ascending", "-likes":"likes descending"}
     SHOES_CATEGORIES = {
     "HE": "Heels",
     "SN": "Sneakers",

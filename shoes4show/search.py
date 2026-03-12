@@ -7,6 +7,7 @@ def run_query(request):
     used_trigram = False
     query = request.POST["query"]
     category_choice = request.POST["category"]
+    sorting_choice = request.POST.get("sorting", "none")
     old_word = query
     new_word = ""
 
@@ -32,7 +33,10 @@ def run_query(request):
                     if find_similarity(split_word(i), split_word(j)) > SIMILARITY_CONST:
                         new_word = j
 
-    return list(found_items_name), used_trigram, old_word, new_word
+    if sorting_choice != "none":
+        found_items_name = found_items_name.order_by(sorting_choice)
+
+    return found_items_name, used_trigram, old_word, new_word
 
 
 def split_word(word):

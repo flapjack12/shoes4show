@@ -23,6 +23,12 @@
                     <option value={{choice}}>{{ choice_value }}</option>
                 {% endfor %}
             </select>
+            <select class="sorting" name="sorting" required="False">
+                <option value="none">idk</option>
+                {% for sorting, sort_value in sorting.items %}
+                <option value={{sorting}}> {{sort_value}} </option>
+                {% endfor %}
+            </select>
         </div>
         <button class="btn btn-primary" type="submit" name="submit">Search</button>
         </form>
