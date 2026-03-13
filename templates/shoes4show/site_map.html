@@ -1,7 +1,55 @@
 {% extends "shoes4show/base.html" %}
 {% load static %}
 
-{% block title_block %}
-    Site map
+{% block body_block %}
+	<div class="d-flex flex-column justify-content-center align-items-center text-center min-vh-100 p-5">
+    	    <h1 class="mb-3">Site map</h1>
+    	    <p class="mb-4">This page is here to allow easy access to any and all pages. Some pages are only accessible upon login, such as uploading items and account.</p>
+
+	    <!-- STYLING THE LINKS TO DISPLAY AS [TEXT:URL LINK] -->
+	    <div class="d-flex flex-column align-items-start">
+		<p class="mb-2">
+                    Home page: 
+                    <a class="text-dark" href="{% url 'shoes4show:index' %}">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:index' %} %}
+                    </a>
+                </p>
+		
+		<p class="mb-2">
+                    Listings page: 
+                    <a class="text-dark" href="{% url 'shoes4show:listings' %}">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:listings' %} %}
+                    </a>
+                </p>
+		
+  	        <p class="mb-2">
+                    About us page: 
+                    <a class="text-dark" href="{% url 'shoes4show:about' %}">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:about' %} %}
+                    </a>
+                </p>
+
+                <p class="mb-2">
+                    Shoe size conversion page: 
+                    <a class="text-dark" href="{% url 'shoes4show:shoe_size_conversion' %}">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:shoe_size_conversion' %}
+                    </a>
+                </p>
+
+                <p class="mb-2">
+                    Site map page: 
+                    <a class="text-dark" href="{% url 'shoes4show:site_map' %}">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:site_map' %}
+                </a>
+                </p>
+
+                <p class="mb-2">
+                    Contact us page: 
+                    <a class="text-dark" href="{% url 'shoes4show:contact_us' %}">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:contact_us' %}
+                    </a>
+                </p>
+            </div>
+	</div>
 {% endblock %}
 
