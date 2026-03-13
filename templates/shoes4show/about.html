@@ -1,17 +1,11 @@
 {% extends "shoes4show/base.html" %}
 {% load static %}
 
-{% block title_block %}
-    About Us
-{% endblock %}
-
 {% block body_block %}
-<h1>About Shoes4Show</h1>
-
-<p>
-    Shoes4Show is a platform where users can explore shoes, browse listings,
-    and share reviews with ratings.
-</p>
-
-<p>Visits: {{ visits }}</p>
+	<div class="d-flex flex-column justify-content-center align-items-center text-center min-vh-100 px-3">
+	    <h1 class="mb-3">Welcome to Shoes4Show!</h1>
+	    <p class="mb-5">Here is a little information about us:</p>
+	    <p class="mb-5">Shoes4Show is a platform where users can explore the latest trending shoes, browse by category, and both read and share reviews. However if price is your priority instead of popularity, we can cover that too. Sign up now to list shoes of your own and leave reviews. Once you leave 100 reviews, you will earn a top review badge for your contributions! Enjoy browsing and get in touch with us over at the contact us page if you have any queries. </p>
+	    <p class="mb-3">Created by Christina, Danylo, Eloise, Saad and Shiyao.</p>
+         </div>
 {% endblock %}
