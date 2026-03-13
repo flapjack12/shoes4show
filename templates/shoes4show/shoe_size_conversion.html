@@ -1,7 +1,11 @@
 {% extends "shoes4show/base.html" %}
 {% load static %}
 
-{% block title_block %}
-    Shoe size conversionnnnnn
+{% block body_block %}
+	<div class="d-flex flex-column justify-content-center align-items-center text-center min-vh-90 p-5">
+    	    <h1 class="mb-3">Shoe Size Conversion Chart</h1>
+    	    <p class="mb-4">Use this chart to compare shoe sizes across different scales.</p>
+  	    <img src="{% static 'images/size_guide.jpg' %}" alt="Shoe size conversion chart" class="img-fluid">
+        </div>
 {% endblock %}
 
