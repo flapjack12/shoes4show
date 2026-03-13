@@ -19,57 +19,50 @@
     
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
-    <!-- STYLING CSS -->
-    <style>
-    body{background-image: url("{% static 'images/cream_backdrop.jpg' %}"); background-size: cover; background-repeat: no-repeat; background-position: center;}
-
-    #category{background-color:#679267; text-dark; border:none; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>"); background-repeat:no-repeat; background-position:right 10px center; background-size:16px; padding-right:30px;}
-    </style>
+    
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css" rel="stylesheet">
     </head>
 
 
-        <!-- HEADER CONTENT-->
-        <header class="py-3">
+	<!-- HEADER CONTENT-->
+        <header class="text-center py-3">
 
         	<!-- TITLE -->
-                    <p class="text-center">Shoes4Show</p>
+                    <p>Shoes4Show</p>
 
 		    <!-- NAVBAR -->
-		    <nav class="navbar navbar-expand-lg w-100">
-  			<div class="container-fluid d-flex align-items-start w-100 px-4">
+		    <nav class="navbar navbar-expand-lg w-100" style="background-color: #679267;">
+  			<div class="d-flex align-items-start w-100">
 
 			    <!-- LEFT SIDE (Home and boots image) -->
-			    <div class="d-flex flex-column align-items-center mr-3 flex-shrink-0">
+			    <div class="d-flex flex-column align-items-center me-3">
                                 <img src="{% static 'images/red_boots.png' %}" alt="Picture of boots" style="height:40px; width:auto;">
 			        <a class="nav-link text-dark" href="{% url 'shoes4show:index' %}">Home</a>
 			    </div>
 
 			    <!-- MIDDLE (Search, categories and upload) -->
-			    <div class="d-flex flex-column flex-grow-1 mx-2 w-100" style="min-width:0;">
+			    <div class="d-flex flex-column flex-grow-1 mx-3">
 			    <!-- SEARCH -->
-			        <form id="search_form" method="post" action="{% url 'shoes4show:search' %}" class="d-flex flex-column mb-2 w-100">
+			        <form id="search_form" method="post" action="{% url 'shoes4show:search' %}" class="w-100 mb-2">
                                     {% csrf_token %}
                                     <input class="form-control w-100" type="text" name="query" id="query" placeholder="Search" spellcheck="true"/>
-				<div class="d-flex justify-content-between align-items-center w-100 mt-1">
+				</form>
 			        <!-- CATEGORIES -->
+				<div class="d-flex justify-content-between align-items-center">
                                     <select class="category_choice" id="category" name="category" required="False">
-                                        <option value="none" selected disabled hidden>
-						Categories
-					</option>
+                                        <option value="none" selected disabled hidden>Categories</option>
                                         {% for choice, choice_value in category_choices.items %}
                                             <option value={{choice}}>{{ choice_value }}</option>
                                         {% endfor %}
                                     </select>
-
-				    <!-- UPLOAD YOUR OWN -->
-			            <a class="nav-link text-dark ms-auto" href="{% url 'shoes4show:add_listing' %}"><u>+ Upload your own</u></a>
-				</div>
-                                </form>
+			        <!-- UPLOAD YOUR OWN -->
+			       <a class="nav-link text-dark ms-auto" href="{% url 'shoes4show:list' %}"><u>+ Upload your own</u></a>
+                            </div>
 			</div>
   
 			    <!-- RIGHT SIDE (login and register if loops) -->
-			    <div class="d-flex flex-column align-items-center ml-3 flex-shrink-0">
+			    <div class="d-flex flex-column align-items-center ms-3">
 			        <a class="nav-link text-dark" href="{% url 'shoes4show:login' %}">Login</a>
 				<hr class="my-1" style="border-top:2px solid black; width:85%;">
         	                <a class="nav-link text-dark" href="{% url 'shoes4show:register' %}">Register</a>
@@ -85,7 +78,7 @@
   			</div>
    		    </nav>
         </header>
-	
+        
 
   	<!-- BODY BLOCK -->
         <div class="container-fluid">

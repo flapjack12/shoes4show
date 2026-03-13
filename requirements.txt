@@ -1,7 +1,7 @@
 asgiref==3.11.1
 Django==6.0.2
 djangorestframework==3.16.1
-packaging @ file:///C:/miniconda3/conda-bld/packaging_1761049137378/work
+packaging==24.0
 pillow==12.1.1
 setuptools==82.0.0
 sqlparse==0.5.5
