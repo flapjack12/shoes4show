@@ -24,8 +24,8 @@ class Item(models.Model):
 }
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
     description = models.TextField(default="default description", validators=[MaxLengthValidator(250)])
-    image = models.ImageField(upload_to='listing_images/') #where are we uploading to?
-    price = models.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0)])
+    image = models.ImageField(upload_to='listing_images/', blank=True) #where are we uploading to?
+    price = models.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0)], default=0.00)
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)

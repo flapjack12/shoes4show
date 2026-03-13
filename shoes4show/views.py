@@ -141,9 +141,13 @@ def search(request):
         query = request.POST["query"]
         result_list, used_trigram, old_word, new_word= run_query(request)
         if used_trigram:
-            context_dict = {"result_list":result_list, "used_trigram":used_trigram, "new_word":new_word, "old_word":old_word, "query":query}
+            context_dict = {"result_list":result_list, "used_trigram":used_trigram, "new_word":new_word, "old_word":old_word, "query":query, }
+            context_dict['category_choices'] = Item.SHOES_CATEGORIES
+            context_dict['sorting'] = Item.SORTING_OPTIONS
         else:
             context_dict = {"result_list":result_list, "query":query, "old_word":old_word}
+            context_dict['category_choices'] = Item.SHOES_CATEGORIES
+            context_dict['sorting'] = Item.SORTING_OPTIONS
     return render(request, 'shoes4show/listings.html', context=context_dict)
 
 

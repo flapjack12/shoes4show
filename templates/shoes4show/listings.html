@@ -15,7 +15,7 @@
     {% endif %}
     <ul>
         {% for listing in result_list %}
-            <a href="{% url 'shoes4show:show_item' listing.slug %}">{{ listing.name }}</a>
+            <a href="{% url 'shoes4show:show_item' listing.slug %}">{{ listing.name }}</a><br>
         {% endfor %}
     </ul>
     {% else %}

@@ -11,7 +11,7 @@ def run_query(request):
     old_word = query
     new_word = ""
 
-    if category_choice != 'any':
+    if category_choice != 'none':
         found_items = Item.objects.all().filter(category=category_choice)
     else:
         found_items = Item.objects.all()

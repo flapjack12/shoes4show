@@ -54,14 +54,19 @@
 				<div class="d-flex justify-content-between align-items-center w-100 mt-1">
 			        <!-- CATEGORIES -->
                                     <select class="category_choice" id="category" name="category" required="False">
-                                        <option value="none" selected disabled hidden>
+                                        <option value="none" selected>
 						Categories
 					</option>
                                         {% for choice, choice_value in category_choices.items %}
                                             <option value={{choice}}>{{ choice_value }}</option>
                                         {% endfor %}
                                     </select>
-
+					<select class="sorting" name="sorting" required="False">
+						<option value="none">idk</option>
+						{% for sorting, sort_value in sorting.items %}
+						<option value={{sorting}}> {{sort_value}} </option>
+						{% endfor %}
+            		</select>
 				    <!-- UPLOAD YOUR OWN -->
 			            <a class="nav-link text-dark ms-auto" href="{% url 'shoes4show:add_listing' %}"><u>+ Upload your own</u></a>
 				</div>
