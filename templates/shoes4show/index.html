@@ -8,6 +8,31 @@
 {% block body_block %}
         <h1>Welcome</h1>
 <div>
+    <div>
+        <form class="form-inline" id="search_form" method="post" action="{% url 'shoes4show:search' %}">
+        {% csrf_token %}
+        <div class="text_search">
+            <input class="form-control" type="text" size="50" name="query" id="query" spellcheck="true"/>
+        </div>
+        <div>
+            <select class="category_choice" id="category" name="category" required="False">
+                <option value="any" selected>
+                    All
+                </option>
+                {% for choice, choice_value in category_choices.items %}
+                    <option value={{choice}}>{{ choice_value }}</option>
+                {% endfor %}
+            </select>
+            <select class="sorting" name="sorting" required="False">
+                <option value="none">idk</option>
+                {% for sorting, sort_value in sorting.items %}
+                <option value={{sorting}}> {{sort_value}} </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit" name="submit">Search</button>
+        </form>
+    </div>
             {% if user.is_authenticated %}
                 howdy {{ user.username }}!
             {% else %}

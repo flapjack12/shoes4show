@@ -19,6 +19,7 @@ def index(request):
     context_dict['items'] = item_list
     context_dict['reviews'] = reviews_list
     context_dict['category_choices'] = Item.SHOES_CATEGORIES
+    context_dict['sorting'] = Item.SORTING_OPTIONS
     visitor_cookie_handler(request)
     response = render(request, 'shoes4show/index.html', context=context_dict)
     return response
@@ -137,8 +138,13 @@ def search(request):
     result_list = []
 
     if request.method == "POST":
-        result_list = run_query(request)
-    return render(request, 'shoes4show/listings.html', {"result_list":result_list})
+        query = request.POST["query"]
+        result_list, used_trigram, old_word, new_word= run_query(request)
+        if used_trigram:
+            context_dict = {"result_list":result_list, "used_trigram":used_trigram, "new_word":new_word, "old_word":old_word, "query":query}
+        else:
+            context_dict = {"result_list":result_list, "query":query, "old_word":old_word}
+    return render(request, 'shoes4show/listings.html', context=context_dict)
 
 
 def about(request):
