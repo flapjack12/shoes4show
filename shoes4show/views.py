@@ -12,15 +12,15 @@ from shoes4show.search import run_query
 
 
 def index(request):
-    item_list = Item.objects.order_by("-likes")[:5]
-    reviews_list = Review.objects.order_by("-views")[:5]
-
-    context_dict = {
-        "boldmessage": "Welcome to Shoes4Show.",
-        "items": item_list,
-        "reviews": reviews_list,
-    }
-
+    request
+    item_list = Item.objects.order_by('-likes')[:5]
+    reviews_list = Review.objects.order_by('-views')[:5]
+    context_dict={}
+    context_dict['boldmessage'] = "Welcome to Shoes4Show."
+    context_dict['items'] = item_list
+    context_dict['reviews'] = reviews_list
+    context_dict['category_choices'] = Item.SHOES_CATEGORIES
+    context_dict['sorting'] = Item.SORTING_OPTIONS
     visitor_cookie_handler(request)
     return render(request, "shoes4show/index.html", context=context_dict)
 
@@ -49,22 +49,7 @@ def show_item(request, category_name_slug):
 
 
 @login_required
-def add_item(request):
-    form = ItemForm()
-
-    if request.method == "POST":
-        form = ItemForm(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect(reverse("shoes4show:index"))
-        else:
-            print(form.errors)
-
-    return render(request, "shoes4show/add_item.html", {"form": form})
-
-
-@login_required
-def add_page(request, category_name_slug):
+def add_review(request, category_name_slug): #do we need a separate review view?
     try:
         category = Item.objects.get(slug=category_name_slug)
     except Item.DoesNotExist:
@@ -93,6 +78,26 @@ def add_page(request, category_name_slug):
 
     context_dict = {"form": form, "category": category}
     return render(request, "shoes4show/add_page.html", context=context_dict)
+  
+  
+@login_required  
+def add_listing(request):
+        context_dict={}
+        context_dict['category_choices'] = Item.SHOES_CATEGORIES
+        
+        form = ItemForm()
+        if request.method == 'POST':
+            form = ItemForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save(commit=True)
+                return redirect(reverse('shoes4show:index'))
+            else:
+                print(form.errors)
+
+        context_dict['form'] = form
+        
+        return render(request, 'shoes4show/add_listing.html', context=context_dict)
+
 
 
 def register(request):
@@ -193,8 +198,42 @@ def search(request):
     result_list = []
 
     if request.method == "POST":
-        query = request.POST.get("query", "").strip().split()
-        if query:
-            result_list = run_query(query)
+        query = request.POST["query"]
+        result_list, used_trigram, old_word, new_word= run_query(request)
+        if used_trigram:
+            context_dict = {"result_list":result_list, "used_trigram":used_trigram, "new_word":new_word, "old_word":old_word, "query":query, }
+            context_dict['category_choices'] = Item.SHOES_CATEGORIES
+            context_dict['sorting'] = Item.SORTING_OPTIONS
+        else:
+            context_dict = {"result_list":result_list, "query":query, "old_word":old_word}
+            context_dict['category_choices'] = Item.SHOES_CATEGORIES
+            context_dict['sorting'] = Item.SORTING_OPTIONS
+    return render(request, 'shoes4show/listings.html', context=context_dict)
 
-    return render(request, "shoes4show/listings.html", {"result_list": result_list})
+
+def about(request):
+    context_dict = {}
+    context_dict['category_choices'] = Item.SHOES_CATEGORIES
+    
+    return render(request, 'shoes4show/about.html', context=context_dict)
+
+
+def contact_us(request):
+    context_dict = {}
+    context_dict['category_choices'] = Item.SHOES_CATEGORIES
+    
+    return render(request, 'shoes4show/contact_us.html', context=context_dict)
+
+
+def site_map(request):
+    context_dict = {}
+    context_dict['category_choices'] = Item.SHOES_CATEGORIES
+    
+    return render(request, 'shoes4show/site_map.html', context=context_dict)
+
+
+def shoe_size_conversion(request):
+    context_dict = {}
+    context_dict['category_choices'] = Item.SHOES_CATEGORIES
+    
+    return render(request, 'shoes4show/shoe_size_conversion.html', context=context_dict)

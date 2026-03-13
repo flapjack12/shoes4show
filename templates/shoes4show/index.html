@@ -9,14 +9,6 @@ Home
 <h1>Welcome to Shoes4Show</h1>
 
 <div>
-    <form method="post" action="{% url 'shoes4show:search' %}">
-        {% csrf_token %}
-        <input type="text" name="query" size="50">
-        <button type="submit">Search</button>
-    </form>
-</div>
-
-<div>
     {% if user.is_authenticated %}
         Hello {{ user.username }}!
     {% else %}

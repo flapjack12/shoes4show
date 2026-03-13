@@ -1,16 +1,31 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator
+from django.core.validators import MaxLengthValidator
 
 class Item(models.Model):
     NAME_MAX_LENGTH = 128
+    SORTING_OPTIONS = {"price":"price ascending", "-price":"price descending", 
+                       "likes":"likes ascending", "-likes":"likes descending"}
     SHOES_CATEGORIES = {
-        "HE":"Heels",
-        "SN":"Sneakers",
-        "SA":"Sandals",
-    }
+    "HE": "Heels",
+    "SN": "Sneakers",
+    "SA": "Sandals",
+    "BO": "Boots",
+    "LO": "Loafers",
+    "FS": "Formal Shoes",
+    "SL": "Slippers",
+    "FL": "Flats",
+    "PU": "Pumps",
+    "AT": "Athletic Shoes",
+    "CL": "Clogs",
+    "ES": "Espadrilles",
+}
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
-    description = models.TextField(default="default description")
+    description = models.TextField(default="default description", validators=[MaxLengthValidator(250)])
+    image = models.ImageField(upload_to='listing_images/', blank=True) #where are we uploading to?
+    price = models.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0)], default=0.00)
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
@@ -34,12 +49,17 @@ class Review(models.Model):
 
     def __str__(self):
         return self.title
-    
+
+
+def user_directory_path(instance,filename):
+    return f'{instance.user.username}/profilepic/{filename}'
+
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    picture = models.ImageField(upload_to=user_directory_path, blank=True)
 
     def __str__(self):
         return self.user.username
