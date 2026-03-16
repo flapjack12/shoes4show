@@ -3,6 +3,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxLengthValidator
+import os
 
 class Item(models.Model):
     NAME_MAX_LENGTH = 128
@@ -52,17 +53,24 @@ class Review(models.Model):
 
 
 def user_directory_path(instance,filename):
-    return f'{instance.user.username}/profilepic/{filename}'
+    extension = filename.split('.')[-1]
+    return f'{instance.user.username}/profilepic/profile.{extension}'
 
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to=user_directory_path, blank=True)
+    picture = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
 
     def __str__(self):
         return self.user.username
+
+    def delete(self,*args, **kwargs):
+        if self.picture and self.picture.path:
+            if os.path.isfile(self.picture.path):
+                os.remove(self.picture.path)
+        super().delete(*args, **kwargs)
 
     
 
