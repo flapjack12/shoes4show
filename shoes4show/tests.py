@@ -96,6 +96,8 @@ class AuthenticationViewsTests(TestCase):
 
 		response = self.client.get(reverse('shoes4show:logout'))
 
+		# Verify the user is redirected to the index page and session is cleared
 		self.assertRedirects(response, reverse('shoes4show:index'))
 		self.assertNotIn('_auth_user_id', self.client.session)
 		self.assertFalse('_auth_user_backend' in self.client.session)
+
