@@ -12,12 +12,10 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
+    <link rel="stylesheet" href="{$ static 'css/style.css' %}>
     <link rel="icon" type="image/png" href="{% static 'images/red_boots.png' %}">
-    <title>
-        Shoes4Show - {% block title_block %}How to Tango with Django!{% endblock %}
-    </title>
     
-    <!-- Bootstrap core CSS -->
+    <!-- BOOTSTRAP CORE CSS -->
     <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <!-- STYLING CSS -->
@@ -54,15 +52,22 @@
 				<div class="d-flex justify-content-between align-items-center w-100 mt-1">
 			        <!-- CATEGORIES -->
                                     <select class="category_choice" id="category" name="category" required="False">
-                                        <option value="none" selected disabled hidden>
+                                        <option value="none" selected>
 						Categories
 					</option>
                                         {% for choice, choice_value in category_choices.items %}
                                             <option value={{choice}}>{{ choice_value }}</option>
                                         {% endfor %}
                                     </select>
+          <!--SORT-->
+					<select class="sorting" name="sorting" required="False">
+						<option value="none">idk</option>
+						{% for sorting, sort_value in sorting.items %}
+						<option value={{sorting}}> {{sort_value}} </option>
+						{% endfor %}
+            		</select>
 				    <!-- UPLOAD YOUR OWN -->
-			            <a class="nav-link text-dark ms-auto" href="{% url 'shoes4show:list' %}"><u>+ Upload your own</u></a>
+			            <a class="nav-link text-dark ms-auto" href="{% url 'shoes4show:add_listing' %}"><u>+ Upload your own</u></a>
 				</div>
                                 </form>
 			</div>
@@ -84,6 +89,7 @@
   			</div>
    		    </nav>
         </header>
+	
 
   	<!-- BODY BLOCK -->
         <div class="container-fluid">

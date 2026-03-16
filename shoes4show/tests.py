@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
-
 class AuthenticationViewsTests(TestCase):
 	# Registration flow: valid input should create user/profile and hash password.
 	def test_register_creates_user_and_profile_with_hashed_password(self):

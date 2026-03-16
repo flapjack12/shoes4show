@@ -1,23 +1,44 @@
 {% extends 'shoes4show/base.html' %}
-{% load static %}
 
 {% block title_block %}
-    Register
+Register
 {% endblock %}
 
 {% block body_block %}
-    <h1>Register for Rango</h1>
-    {% if registered %}
-        Rango says: <strong>thank you for registering!</strong>
-        <a href="{% url 'shoes4show:index' %}">Return to the homepage.</a><br />
-    {% else %}
-        Rango says: <strong>register here!</strong><br />
-        <form id="user_form" method="post" action="{% url 'shoes4show:register' %}"
-                enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-        <input type="submit" name="submit" value="Register" />
-        </form>
-    {% endif %}
+<h1>Create an Account</h1>
+
+<form method="post" action="{% url 'shoes4show:register' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ profile_form.as_p }}
+
+    <div style="margin-top: 15px;">
+        <label>Profile Picture Preview:</label><br>
+        <img id="preview" style="width: 96px; height: 96px; object-fit: cover; display:none;">
+    </div>
+    <input type="submit" value="Register">
+</form>
+
+<p>
+    Already have an account?
+    <a href="{% url 'shoes4show:login' %}">Login here</a>
+</p>
+
+<script>
+    const fileInput = document.querySelector('input[type="file"]');
+    const preview = document.getElementById('preview');
+
+    if (fileInput){
+        fileInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file){
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = 'inline-block';
+            }else{
+                preview.src = '';
+                preview.style.display = 'none';
+            }
+        });
+    }
+</script>
 {% endblock %}

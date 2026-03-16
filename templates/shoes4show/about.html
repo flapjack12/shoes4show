@@ -1,22 +1,11 @@
 {% extends "shoes4show/base.html" %}
 {% load static %}
 
-{% block title_block %}
-    About
-{% endblock %}
-
 {% block body_block %}
-        <h1>Rango says...</h1>
-        <div>
-            here is the about page.<br />
-            <strong>This tutorial has been put together by</strong><br />
-        </div>
-        <div>Visits: {{ visits}}</div>
-        <div>
-            <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
-        </div>
-        <div>
-            <img src="{{ MEDIA_URL }}cat.jpg" alt="Picture of a Cat." />
-        </div>
-
+	<div class="d-flex flex-column justify-content-center align-items-center text-center min-vh-100 px-3">
+	    <h1 class="mb-3">Welcome to Shoes4Show!</h1>
+	    <p class="mb-5">Here is a little information about us:</p>
+	    <p class="mb-5">Shoes4Show is a platform where users can explore the latest trending shoes, browse by category, and both read and share reviews. However if price is your priority instead of popularity, we can cover that too. Sign up now to list shoes of your own and leave reviews. Once you leave 100 reviews, you will earn a top review badge for your contributions! Enjoy browsing and get in touch with us over at the contact us page if you have any queries. </p>
+	    <p class="mb-3">Created by Christina, Danylo, Eloise, Saad and Shiyao.</p>
+         </div>
 {% endblock %}
