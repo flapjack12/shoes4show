@@ -9,18 +9,22 @@ from django.urls import reverse
 from shoes4show.forms import ItemForm, ReviewForm, UserForm, UserProfileForm
 from shoes4show.models import Item, Review
 from shoes4show.search import run_query
-
+CATEGORY_CHOICES = Item.SHOES_CATEGORIES
+CATEGORY_CHOICES.update({'none': 'All'})
+SORTING_CHOICES = Item.SORTING_OPTIONS
+SORTING_CHOICES.update({'none': 'None'})
 
 def index(request):
-    request
     item_list = Item.objects.order_by('-likes')[:5]
     reviews_list = Review.objects.order_by('-views')[:5]
     context_dict={}
     context_dict['boldmessage'] = "Welcome to Shoes4Show."
     context_dict['items'] = item_list
     context_dict['reviews'] = reviews_list
-    context_dict['category_choices'] = Item.SHOES_CATEGORIES
-    context_dict['sorting'] = Item.SORTING_OPTIONS
+    context_dict['category_choices'] = CATEGORY_CHOICES
+    context_dict['sorting'] = SORTING_CHOICES
+    context_search = request.GET.get('search_context', ["", "none", "none"])
+    context_dict['search_context'] = context_search
     visitor_cookie_handler(request)
     return render(request, "shoes4show/index.html", context=context_dict)
 
@@ -195,45 +199,55 @@ def visitor_cookie_handler(request):
 
 
 def search(request):
-    result_list = []
-
-    if request.method == "POST":
-        query = request.POST["query"]
-        result_list, used_trigram, old_word, new_word= run_query(request)
-        if used_trigram:
-            context_dict = {"result_list":result_list, "used_trigram":used_trigram, "new_word":new_word, "old_word":old_word, "query":query, }
-            context_dict['category_choices'] = Item.SHOES_CATEGORIES
-            context_dict['sorting'] = Item.SORTING_OPTIONS
-        else:
-            context_dict = {"result_list":result_list, "query":query, "old_word":old_word}
-            context_dict['category_choices'] = Item.SHOES_CATEGORIES
-            context_dict['sorting'] = Item.SORTING_OPTIONS
+    result_list, used_trigram, old_word, new_word, search_context = run_query(request)
+    if used_trigram:
+        context_dict = {
+            "result_list": result_list,
+            "used_trigram": used_trigram,
+            "new_word": new_word,
+            "old_word": old_word,
+            "search_context": search_context,
+            "category_choices": CATEGORY_CHOICES,
+            "sorting": SORTING_CHOICES,
+        }
+    else:
+        context_dict = {
+            "result_list": result_list,
+            "search_context": search_context,
+            "old_word": old_word,
+            "category_choices": CATEGORY_CHOICES,
+            "sorting": SORTING_CHOICES,
+        }
     return render(request, 'shoes4show/listings.html', context=context_dict)
 
 
 def about(request):
     context_dict = {}
-    context_dict['category_choices'] = Item.SHOES_CATEGORIES
-    
+    context_dict['category_choices'] = CATEGORY_CHOICES
+    context_dict['sorting'] = SORTING_CHOICES
+
     return render(request, 'shoes4show/about.html', context=context_dict)
 
 
 def contact_us(request):
     context_dict = {}
-    context_dict['category_choices'] = Item.SHOES_CATEGORIES
-    
+    context_dict['category_choices'] = CATEGORY_CHOICES
+    context_dict['sorting'] = SORTING_CHOICES
+
     return render(request, 'shoes4show/contact_us.html', context=context_dict)
 
 
 def site_map(request):
     context_dict = {}
-    context_dict['category_choices'] = Item.SHOES_CATEGORIES
-    
+    context_dict['category_choices'] = CATEGORY_CHOICES
+    context_dict['sorting'] = SORTING_CHOICES
+
     return render(request, 'shoes4show/site_map.html', context=context_dict)
 
 
 def shoe_size_conversion(request):
     context_dict = {}
-    context_dict['category_choices'] = Item.SHOES_CATEGORIES
-    
+    context_dict['category_choices'] = CATEGORY_CHOICES
+    context_dict['sorting'] = SORTING_CHOICES
+
     return render(request, 'shoes4show/shoe_size_conversion.html', context=context_dict)
