@@ -5,24 +5,23 @@
 <html lang="en">
 
 
-    <!-- HEAD STYLING + BOOTSTRAP-->
+    <!-- HEAD STYLING -->
     <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v3.8.5">
-    <link rel="stylesheet" href="{$ static 'css/style.css' %}>
     <link rel="icon" type="image/png" href="{% static 'images/red_boots.png' %}">
-    
-    <!-- BOOTSTRAP CORE CSS -->
+	
+    <!-- BOOTSTRAP CORE CSS + CUSTOM -->
     <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <!-- STYLING CSS -->
+    <div style="background: url('{% static 'images/background.jpg' %}'); min-height: 100vh;">
     <style>
-    body{background-image: url("{% static 'images/cream_backdrop.jpg' %}"); background-size: cover; background-repeat: no-repeat; background-position: center;}
-
-    #category{background-color:#679267; text-dark; border:none; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>"); background-repeat:no-repeat; background-position:right 10px center; background-size:16px; padding-right:30px;}
+    #category{background-color:#ACE1AF; text-dark; border:none; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>"); background-repeat:no-repeat; background-position:right 10px center; background-size:16px; padding-right:30px;}
     </style>
     </head>
 
@@ -50,6 +49,7 @@
                                     {% csrf_token %}
                                     <input class="form-control w-100" type="text" name="query" id="query" placeholder="Search" spellcheck="true"/>
 				<div class="d-flex justify-content-between align-items-center w-100 mt-1">
+
 			        <!-- CATEGORIES -->
                                     <select class="category_choice" id="category" name="category" required="False">
                                         <option value="none" selected>
@@ -93,17 +93,18 @@
 
   	<!-- BODY BLOCK -->
         <div class="container-fluid">
-            <div class="row">
+	    <div class="background">
+                <div class="row">
               
-                <main role="main" class="w-100 px-4">		
+                <main role="main" class="w-100 px-4 background">		
                     {% block body_block %}
 		    {% endblock %}
-
+		
 
                     <!-- FOOTER -->
                     <footer class="text-center py-3">
 			<!-- NAVBAR OF LINKS -->
-			<nav class="navbar navbar-expand-lg" style="background-color: #679267;">
+			<nav class="navbar navbar-expand-lg" style="background-color: #ACE1AF;">
   			    <div class="container-fluid">
     				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
      					<span class="navbar-toggler-icon"></span>
@@ -132,5 +133,5 @@
         <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js"></script>
-    </body>
+    </div>
 </html>

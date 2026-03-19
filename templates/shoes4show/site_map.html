@@ -11,21 +11,22 @@
 		<p class="mb-2">
                     Home page: 
                     <a class="text-dark" href="{% url 'shoes4show:index' %}">
-                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:index' %} %}
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:index' %}
                     </a>
                 </p>
 		
+		<!-- CURRENTLY THIS IS LINKED TO HOME UNTIL TEMPLATE FORMED -->
 		<p class="mb-2">
                     Listings page: 
-                    <a class="text-dark" href="{% url 'shoes4show:listings' %}">
-                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:listings' %} %}
+                    <a class="text-dark" href="{% url 'shoes4show:index' %}">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:index' %}
                     </a>
                 </p>
 		
   	        <p class="mb-2">
                     About us page: 
                     <a class="text-dark" href="{% url 'shoes4show:about' %}">
-                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:about' %} %}
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:about' %}
                     </a>
                 </p>
 
@@ -49,6 +50,41 @@
                         {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:contact_us' %}
                     </a>
                 </p>
+
+		<!-- URLS BASED ON AUTHENTICATION -->
+		{% if user.is_authenticated %}
+
+		<p class="mb-2">
+                    Upload your own page: 
+                    <a class="text-dark" href="{% url 'shoes4show:add_listing' %}">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:add_listing' %}
+                    </a>
+                </p>
+
+		<p class="mb-2">
+                    Account page: 
+                    <a class="text-dark" href="{% url 'shoes4show:account' %}">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:account' %}
+                    </a>
+                </p>
+
+		{% else %}
+
+		<p class="mb-2">
+                    Login page: 
+                    <a class="text-dark" href="{% url 'shoes4show:login' %}">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:login' %}
+                    </a>
+                </p>
+
+		<p class="mb-2">
+                    Register page: 
+                    <a class="text-dark" href="{% url 'shoes4show:register' %}">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:register' %}
+                    </a>
+                </p>
+
+		{% endif %}
             </div>
 	</div>
 {% endblock %}
