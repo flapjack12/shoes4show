@@ -18,12 +18,13 @@ def run_query(request):
 
     if query:
         found_items_name = found_items.annotate(search=SearchVector("name")).filter(search=query)
+        print(found_items_name)
     else:
         found_items_name = found_items
 
 
     if not found_items_name:
-        found_items_name = Item.objects.annotate(similarity=TrigramWordSimilarity(query, "name")).filter(similarity__gt=SIMILARITY_CONST)
+        found_items_name = found_items.annotate(similarity=TrigramWordSimilarity(query, "name")).filter(similarity__gt=SIMILARITY_CONST)
         if found_items_name:
             used_trigram = True
             query_list = [x.lower() for x in query.strip().split()]
