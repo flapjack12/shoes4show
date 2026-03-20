@@ -29,14 +29,7 @@ def index(request):
     return render(request, "shoes4show/index.html", context=context_dict)
 
 
-def about(request):
-    visitor_cookie_handler(request)
-    context_dict = {
-        "visits": request.session.get("visits", 1),
-    }
-    return render(request, "shoes4show/about.html", context=context_dict)
-
-
+#what is this doing, think its trying to combine two things
 def show_item(request, category_name_slug):
     context_dict = {}
 
@@ -50,6 +43,35 @@ def show_item(request, category_name_slug):
         context_dict["reviews"] = None
 
     return render(request, "shoes4show/category.html", context=context_dict)
+
+
+#confused on names for stuff with categories etc here, copied for my changes jic
+def show_listing(request, shoe_slug):
+    context_dict = {}
+    
+    try:
+        shoe = Item.objects.get(slug=shoe_slug)
+        reviews = Review.objects.filter(item=shoe)
+        context_dict["reviews"] = reviews
+        context_dict["shoe"] = shoe
+    except Item.DoesNotExist:
+        context_dict["shoe"] = None
+        context_dict["reviews"] = None
+
+    return render(request, "shoes4show/listing.html", context=context_dict)
+
+
+def show_listings(request):
+    shoes = Item.objects.all()
+
+    return render(request, "shoes4show/listings.html", {"shoes": shoes})
+
+
+def show_listings_by_category(request, category_slug):
+    category = Category.objects.get(slug=category_slug)
+    shoes = Item.objects.filter(category=category)
+    
+    return render(request, "shoes4show/listings.html", {"shoes": shoes, "category": category})
 
 
 @login_required
@@ -223,9 +245,11 @@ def search(request):
 
 def about(request):
     context_dict = {}
-    context_dict['category_choices'] = CATEGORY_CHOICES
-    context_dict['sorting'] = SORTING_CHOICES
-
+    context_dict['category_choices'] = Item.SHOES_CATEGORIES
+    
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session.get("visits", 1)
+    
     return render(request, 'shoes4show/about.html', context=context_dict)
 
 

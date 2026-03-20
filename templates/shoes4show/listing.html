@@ -1,0 +1,28 @@
+{% extends 'shoes4show/base.html' %}
+{% load static %}
+
+{% block body_block %}
+    {% if shoe %}
+        <p>{{ shoe.name }}</p>
+        <p>{{ shoe.description }}</p>
+        <p>{{ shoe.price }}</p>
+        <p>{{ shoe.image }}</p>
+        <p>{{ shoe.category }}</p>
+
+
+        <!-- REVIEWS DISPLAY -->
+	<p>Reviews:</p>
+        {% if reviews %}
+            <ul>
+                {% for review in reviews %}
+                    <li>{{ review.title }} - {{ review.content }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No reviews yet.</p>
+        {% endif %}
+
+    {% else %}
+        <p>Shoe not found - Please try again</p>
+    {% endif %}
+{% endblock %}

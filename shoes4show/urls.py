@@ -5,7 +5,9 @@ app_name = "shoes4show"
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('category/<slug:category_name_slug>/', views.show_item, name='show_item'),
+    path('shoe/<slug:shoe_slug>/', views.show_listing, name='show_listing'),
+    path('shoes/', views.show_listings, name='show_listings'),
+    path('category/<slug:category_name_slug>/', views.show_listings_by_category, name='show_listings_by_category'),
     path('add_listing/', views.add_listing, name='add_listing'),
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),

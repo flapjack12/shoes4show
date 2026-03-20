@@ -1,20 +1,7 @@
 {% extends "shoes4show/base.html" %}
 {% load static %}
 
-{% block title_block %}
-Home
-{% endblock %}
-
 {% block body_block %}
-<h1>Welcome to Shoes4Show</h1>
-
-<div>
-    {% if user.is_authenticated %}
-        Hello {{ user.username }}!
-    {% else %}
-        Welcome guest!
-    {% endif %}
-</div>
 
 <p><strong>{{ boldmessage }}</strong></p>
 
@@ -24,7 +11,7 @@ Home
         <ul>
             {% for item in items %}
                 <li>
-                    <a href="{% url 'shoes4show:show_item' item.slug %}">
+                    <a href="{% url 'shoes4show:show_listing' item.slug %}">
                         {{ item.name }}
                     </a>
                 </li>
