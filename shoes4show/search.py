@@ -5,9 +5,9 @@ from django.contrib.postgres.search import SearchVector, TrigramWordSimilarity, 
 def run_query(request):
     SIMILARITY_CONST = 0.4
     used_trigram = False
-    query = request.POST["query"]
-    category_choice = request.POST["category"]
-    sorting_choice = request.POST.get("sorting", "none")
+    query = request.GET.get('query', '')
+    category_choice = request.GET.get('category', 'none')
+    sorting_choice = request.GET.get('sorting', 'none')
     old_word = query
     new_word = ""
 
@@ -18,12 +18,13 @@ def run_query(request):
 
     if query:
         found_items_name = found_items.annotate(search=SearchVector("name")).filter(search=query)
+        print(found_items_name)
     else:
         found_items_name = found_items
 
 
     if not found_items_name:
-        found_items_name = Item.objects.annotate(similarity=TrigramWordSimilarity(query, "name")).filter(similarity__gt=SIMILARITY_CONST)
+        found_items_name = found_items.annotate(similarity=TrigramWordSimilarity(query, "name")).filter(similarity__gt=SIMILARITY_CONST)
         if found_items_name:
             used_trigram = True
             query_list = [x.lower() for x in query.strip().split()]
@@ -36,7 +37,7 @@ def run_query(request):
     if sorting_choice != "none":
         found_items_name = found_items_name.order_by(sorting_choice)
 
-    return found_items_name, used_trigram, old_word, new_word
+    return found_items_name, used_trigram, old_word, new_word, [query, category_choice, sorting_choice]
 
 
 def split_word(word):
