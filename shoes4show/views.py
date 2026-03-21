@@ -15,11 +15,13 @@ SORTING_CHOICES = Item.SORTING_OPTIONS
 SORTING_CHOICES.update({'none': 'None'})
 
 def index(request):
-    item_list = Item.objects.order_by('-likes')[:5]
+    item_list_1 = Item.objects.order_by('-likes')[:4]
+    item_list_2 = Item.objects.order_by('-likes')[4:8]
+    item_list_3 = Item.objects.order_by('-likes')[8:12]
     reviews_list = Review.objects.order_by('-views')[:5]
     context_dict={}
     context_dict['boldmessage'] = "Welcome to Shoes4Show."
-    context_dict['items'] = item_list
+    context_dict['items'] = [item_list_1, item_list_2, item_list_3]
     context_dict['reviews'] = reviews_list
     context_dict['category_choices'] = CATEGORY_CHOICES
     context_dict['sorting'] = SORTING_CHOICES
@@ -61,17 +63,17 @@ def show_listing(request, shoe_slug):
     return render(request, "shoes4show/listing.html", context=context_dict)
 
 
-def show_listings(request):
-    shoes = Item.objects.all()
+# def show_listings(request):
+#     shoes = Item.objects.all()
 
-    return render(request, "shoes4show/listings.html", {"shoes": shoes})
+#     return render(request, "shoes4show/listings.html", {"shoes": shoes})
 
 
-def show_listings_by_category(request, category_slug):
-    category = Category.objects.get(slug=category_slug)
-    shoes = Item.objects.filter(category=category)
+# def show_listings_by_category(request, category_slug):
+#     category = Category.objects.get(slug=category_slug)
+#     shoes = Item.objects.filter(category=category)
     
-    return render(request, "shoes4show/listings.html", {"shoes": shoes, "category": category})
+#     return render(request, "shoes4show/listings.html", {"shoes": shoes, "category": category})
 
 
 @login_required
