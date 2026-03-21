@@ -67,10 +67,10 @@ def show_listings(request):
     return render(request, "shoes4show/listings.html", {"shoes": shoes})
 
 
-def show_listings_by_category(request, category_slug):
-    category = Category.objects.get(slug=category_slug)
-    shoes = Item.objects.filter(category=category)
-    
+def show_listings_by_category(request, category_name_slug):
+    shoes = Item.objects.filter(category=category_name_slug)
+    category = Item.SHOES_CATEGORIES.get(category_name_slug, category_name_slug)
+
     return render(request, "shoes4show/listings.html", {"shoes": shoes, "category": category})
 
 

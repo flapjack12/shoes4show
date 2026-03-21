@@ -25,19 +25,9 @@ class ItemForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-    title = forms.CharField(max_length=Item.NAME_MAX_LENGTH, help_text="Please enter the title of the page.")
-    url = forms.URLField(max_length=200,help_text="Please enter the URL of the page.")
-    views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-
-    def clean(self):
-        cleaned_data = super().clean()
-        return cleaned_data
-
-
-class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        exclude = ("category",)
+        fields = ("title", "url", "views")
 
 
 class UserForm(UserCreationForm):
