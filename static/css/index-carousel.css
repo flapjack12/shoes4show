@@ -1,0 +1,53 @@
+/* Hide default Bootstrap controls */
+.carousel-control-prev,
+.carousel-control-next {
+    display: none;
+}
+
+/* Flex container: buttons on left/right, carousel in middle */
+
+.carousel-with-side-buttons {
+    display: flex;
+    align-items: center;       /* vertically center buttons with carousel */
+    gap: 1rem;                /* space between buttons and carousel */
+}
+
+/* Style custom buttons – adjust as needed */
+.carousel-btn {
+    background-color: #84878b;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+
+transition: background-color 0.2s;
+    flex-shrink: 0;           /* prevent shrinking on narrow screens */
+}
+.carousel-btn:hover {
+    background-color: #0b5ed7;
+}
+
+/* Carousel takes remaining width */
+.carousel-with-side-buttons .carousel {
+    flex: 1;
+}
+
+/* Optional: ensure the grid images scale nicely */
+.carousel-item .row {
+    margin: 0;
+}
+.carousel-item img {
+    width: 100%;
+    height: 200px; 
+    object-fit: cover;
+    /*aspect-ratio: 4 / 3;*/
+}
+.carousel-item img:hover{
+    transform: scale(1.02);
+}
