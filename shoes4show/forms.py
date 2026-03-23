@@ -14,7 +14,6 @@ class ItemForm(forms.ModelForm):
     image = forms.ImageField(help_text="Choose photo:")
     price = forms.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0)], widget=forms.NumberInput(attrs={'step':'0.01'}), help_text="Enter price:")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
-    likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
     category = forms.ChoiceField(required=False, choices=Item.SHOES_CATEGORIES, help_text="Choose a category:")

@@ -8,7 +8,7 @@ import os
 class Item(models.Model):
     NAME_MAX_LENGTH = 128
     SORTING_OPTIONS = {"price":"price ascending", "-price":"price descending", 
-                       "likes":"likes ascending", "-likes":"likes descending"}
+                       "views":"views ascending", "-views":"views descending"}
     SHOES_CATEGORIES = {
     "HE": "Heels",
     "SN": "Sneakers",
@@ -28,7 +28,6 @@ class Item(models.Model):
     image = models.ImageField(upload_to='listing_images/', blank=True) #where are we uploading to?
     price = models.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0)], default=0.00)
     views = models.IntegerField(default=0)
-    likes = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
     category = models.CharField(choices=SHOES_CATEGORIES, null=True)
 

@@ -15,7 +15,7 @@ SORTING_CHOICES = Item.SORTING_OPTIONS
 SORTING_CHOICES.update({'none': 'None'})
 
 def index(request):
-    item_list = Item.objects.order_by('-likes')[:5]
+    item_list = Item.objects.order_by('-views')[:5]
     reviews_list = Review.objects.order_by('-views')[:5]
     context_dict={}
     context_dict['boldmessage'] = "Welcome to Shoes4Show."
