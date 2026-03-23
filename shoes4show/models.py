@@ -1,9 +1,31 @@
+from django.utils import timezone
+import uuid
+
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxLengthValidator
 import os
+
+def item_image_upload_path(instance, filename):
+    name = slugify(instance.name)
+    ext = filename.split('.')[-1].lower()
+    unique = uuid.uuid4().hex[:8] 
+    new_filename = f"{name}-{unique}.{ext}"
+    print(new_filename)
+    return os.path.join('media/listing_images/', new_filename)
+  
+  
+
+class DailyItemView(models.Model):
+    item = models.ForeignKey('Item', on_delete=models.CASCADE)
+    date = models.DateField(default=timezone.now)
+    count = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ('item', 'date')
+        
 
 class Item(models.Model):
     NAME_MAX_LENGTH = 128
@@ -22,10 +44,12 @@ class Item(models.Model):
     "AT": "Athletic Shoes",
     "CL": "Clogs",
     "ES": "Espadrilles",
-}
+    }
+
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
     description = models.TextField(default="default description", validators=[MaxLengthValidator(250)])
-    image = models.ImageField(upload_to='listing_images/', blank=True) #where are we uploading to?
+    slug = models.SlugField(unique=True)
+    image = models.ImageField(upload_to='listing_images/', blank=False)
     price = models.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0)], default=0.00)
     views = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
@@ -40,6 +64,7 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+      
     
 class Review(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
