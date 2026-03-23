@@ -28,7 +28,6 @@ def index(request):
     context_dict['sorting'] = SORTING_CHOICES
     context_search = request.GET.get('search_context', ["", "none", "none"])
     context_dict['search_context'] = context_search
-    context_dict['is_index'] = True
     today = timezone.now().date()
     most_viewed_today = DailyItemView.objects.filter(date=today).order_by('-count').first()
     context_dict['most_viewed_today'] = most_viewed_today.item if most_viewed_today else None
@@ -224,25 +223,18 @@ def visitor_cookie_handler(request):
 
 def search(request):
     result_list, used_trigram, old_word, new_word, search_context = run_query(request)
+    context_dict = { 
+        "result_list": result_list,
+        "old_word": old_word,
+        "category_choices": CATEGORY_CHOICES,
+        "sorting": SORTING_CHOICES,
+        "search_context": search_context,
+        "is_search": True,
+        }
     if used_trigram:
-        context_dict = {
-            "result_list": result_list,
-            "used_trigram": used_trigram,
-            "new_word": new_word,
-            "old_word": old_word,
-            "search_context": search_context,
-            "category_choices": CATEGORY_CHOICES,
-            "sorting": SORTING_CHOICES,
-        }
-    else:
-        context_dict = {
-            "result_list": result_list,
-            "search_context": search_context,
-            "old_word": old_word,
-            "category_choices": CATEGORY_CHOICES,
-            "sorting": SORTING_CHOICES,
-        }
-        
+        context_dict["used_trigram"] = used_trigram
+        context_dict["new_word"] = new_word
+
     return render(request, 'shoes4show/listings.html', context=context_dict)
 
 

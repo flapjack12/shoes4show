@@ -73,7 +73,7 @@
                                         {% endfor %}
                                     </select>
           <!--SORT-->
-		  {% if not is_index %}
+		  {% if is_search %}
 					<select class="sorting" id="sorting" name="sorting" required="False">
 						{% for sorting, sort_value in sorting.items %}
 						{% if search_context|length > 2 and sorting == search_context.2 %}
