@@ -15,6 +15,8 @@ def item_image_upload_path(instance, filename):
     new_filename = f"{name}-{unique}.{ext}"
     print(new_filename)
     return os.path.join('media/listing_images/', new_filename)
+  
+  
 
 class DailyItemView(models.Model):
     item = models.ForeignKey('Item', on_delete=models.CASCADE)
@@ -23,6 +25,7 @@ class DailyItemView(models.Model):
 
     class Meta:
         unique_together = ('item', 'date')
+        
 
 class Item(models.Model):
     NAME_MAX_LENGTH = 128
@@ -46,7 +49,7 @@ class Item(models.Model):
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
     description = models.TextField(default="default description", validators=[MaxLengthValidator(250)])
     slug = models.SlugField(unique=True)
-    image = models.ImageField(upload_to=item_image_upload_path, blank=True) #where are we uploading to?
+    image = models.ImageField(upload_to='listing_images/', blank=False)
     price = models.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0)], default=0.00)
     views = models.IntegerField(default=0)
     category = models.CharField(choices=SHOES_CATEGORIES, null=True)
@@ -60,6 +63,7 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+      
     
 class Review(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)

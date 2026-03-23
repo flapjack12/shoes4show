@@ -1,2 +1,4 @@
-/*<!-- BASE STYLING -->*/
-.background{background-color: #FFFDD0; min-height: 100vh;}
+<!-- BASE STYLING -->
+.card.listings_cards{background-color: #ACE1AF !important;}
+.listings_cards{background-color: #ACE1AF !important;}
+

@@ -19,8 +19,11 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 	<link rel="stylesheet" href="{% static 'css/index-carousel.css' %}">
 
-    <!-- STYLING CSS -->
 
+    {% block css %}
+    {% endblock %}
+
+    <!-- STYLING CSS -->
     <style>
     #category{background-color:#6a8567; text-dark; border:none; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>"); background-repeat:no-repeat; background-position:right 10px center; background-size:16px; padding-right:30px;}
 	#sorting{background-color:#6a8567; text-dark; border:none; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>"); background-repeat:no-repeat; background-position:right 10px center; background-size:16px; padding-right:30px;}
