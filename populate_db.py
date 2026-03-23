@@ -1,9 +1,15 @@
 import os
+from pathlib import Path
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'shoes4show_project.settings')
 
 import django
 django.setup()
 from shoes4show.models import Item, Review
+from django.core.files import File
+from django.template.defaultfilters import slugify
+
+IMAGE_SOURCE_DIR = Path("media/listing_images/")
+
 
 def populate():
     items = [
@@ -21,12 +27,22 @@ def populate():
 ]
 
     for item in items:
-        add_item(**item)
+        image_filename = slugify(item["name"]) + ".jpg"
+        image_path = IMAGE_SOURCE_DIR / image_filename
+        add_item(**item, image_path=image_path)
 
 
 
-def add_item(name, description, category, likes):
+def add_item(name, description, category, likes, image_path=None):
     p = Item.objects.get_or_create(name=name, description=description, category=category, likes=likes)[0]
+
+    if image_path and not p.image:
+        with open(image_path, 'rb') as f:
+        
+            p.image.save(image_path.name, File(f), save=True)
+        print(f"Added image for '{name}'")
+    elif not image_path:
+        print(f"No image provided for '{name}'")
     p.save()
     return p
 
