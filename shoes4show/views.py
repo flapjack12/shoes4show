@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -8,7 +9,7 @@ from django.urls import reverse
 from django.template.defaultfilters import slugify
 
 from shoes4show.forms import ItemForm, ReviewForm, UserForm, UserProfileForm
-from shoes4show.models import Item, Review
+from shoes4show.models import Item, Review, DailyItemView
 from shoes4show.search import run_query
 CATEGORY_CHOICES = Item.SHOES_CATEGORIES
 CATEGORY_CHOICES.update({'none': 'All'})
@@ -16,28 +17,22 @@ SORTING_CHOICES = Item.SORTING_OPTIONS
 SORTING_CHOICES.update({'none': 'None'})
 
 def index(request):
-    item_list_1 = Item.objects.order_by('-likes')[:4]
-    item_list_2 = Item.objects.order_by('-likes')[4:8]
-    item_list_3 = Item.objects.order_by('-likes')[8:12]
-    reviews_list = Review.objects.order_by('-views')[:5]
-    max_views = 0
-    max_viewed_item = None
-    for item in Item.objects.all():
-        if request.session.get(slugify(item.name) + "_visits", 0) > max_views:
-            max_views = request.session.get(slugify(item.name) + "_visits", 0)
-            max_viewed_item = item
+    item_list_1 = Item.objects.order_by('-views')[:4]
+    item_list_2 = Item.objects.order_by('-views')[4:8]
+    item_list_3 = Item.objects.order_by('-views')[8:12]
 
     context_dict={}
     context_dict['boldmessage'] = "Welcome to Shoes4Show."
     context_dict['items'] = [item_list_1, item_list_2, item_list_3]
-    context_dict['reviews'] = reviews_list
     context_dict['category_choices'] = CATEGORY_CHOICES
     context_dict['sorting'] = SORTING_CHOICES
     context_search = request.GET.get('search_context', ["", "none", "none"])
     context_dict['search_context'] = context_search
     context_dict['is_index'] = True
-    context_dict['max_views'] = max_views
-    context_dict['max_viewed_item'] = max_viewed_item
+    today = timezone.now().date()
+    most_viewed_today = DailyItemView.objects.filter(date=today).order_by('-count').first()
+    context_dict['most_viewed_today'] = most_viewed_today.item if most_viewed_today else None
+
     visitor_cookie_handler(request)
     return render(request, "shoes4show/index.html", context=context_dict)
 
@@ -61,7 +56,6 @@ def index(request):
 #confused on names for stuff with categories etc here, copied for my changes jic
 def show_listing(request, shoe_slug):
     context_dict = {}
-    item_specific_views(request, shoe_slug)
     context_dict['category_choices'] = CATEGORY_CHOICES
     context_dict['sorting'] = SORTING_CHOICES
     context_search = request.GET.get('search_context', ["", "none", "none"])
@@ -71,6 +65,12 @@ def show_listing(request, shoe_slug):
         reviews = Review.objects.filter(item=shoe)
         context_dict["reviews"] = reviews
         context_dict["shoe"] = shoe
+        today = timezone.now().date()
+        daily_view, created = DailyItemView.objects.get_or_create(item=shoe, date=today)
+        daily_view.count += 1
+        daily_view.save()
+        shoe.views += 1
+        shoe.save()
     except Item.DoesNotExist:
         context_dict["shoe"] = None
         context_dict["reviews"] = None
@@ -78,22 +78,6 @@ def show_listing(request, shoe_slug):
     return render(request, "shoes4show/listing.html", context=context_dict)
 
 
-def item_specific_views(request, slug):
-    visits = int(get_server_side_cookie(request, slug + "_visits", "1"))
-    last_visit_cookie = get_server_side_cookie(request, slug + "_last_visit", str(datetime.now()))
-
-    try:
-        last_visit_time = datetime.strptime(last_visit_cookie[:-7], "%Y-%m-%d %H:%M:%S")
-    except ValueError:
-        last_visit_time = datetime.now()
-
-    if (datetime.now() - last_visit_time).days > 0:
-        visits = visits + 1
-        request.session[slug + "_last_visit"] = str(datetime.now())
-    else:
-        request.session[slug + "_last_visit"] = last_visit_cookie
-
-    request.session[slug + "_visits"] = visits
 
 
 # def show_listings(request):

@@ -1,3 +1,4 @@
+from django.utils import timezone
 import uuid
 
 from django.db import models
@@ -15,10 +16,18 @@ def item_image_upload_path(instance, filename):
     print(new_filename)
     return os.path.join('media/listing_images/', new_filename)
 
+class DailyItemView(models.Model):
+    item = models.ForeignKey('Item', on_delete=models.CASCADE)
+    date = models.DateField(default=timezone.now)
+    count = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ('item', 'date')
+
 class Item(models.Model):
     NAME_MAX_LENGTH = 128
     SORTING_OPTIONS = {"price":"price ascending", "-price":"price descending", 
-                       "likes":"likes ascending", "-likes":"likes descending"}
+                       "popularity":"views ascending", "-popularity":"views descending"}
     SHOES_CATEGORIES = {
     "HE": "Heels",
     "SN": "Sneakers",
@@ -40,7 +49,6 @@ class Item(models.Model):
     image = models.ImageField(upload_to=item_image_upload_path, blank=True) #where are we uploading to?
     price = models.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0)], default=0.00)
     views = models.IntegerField(default=0)
-    likes = models.IntegerField(default=0)
     category = models.CharField(choices=SHOES_CATEGORIES, null=True)
 
     def save(self, *args, **kwargs):

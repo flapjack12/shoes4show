@@ -49,8 +49,8 @@
     document.getElementById('prevBtn').addEventListener('click', () => carousel.prev());
     document.getElementById('nextBtn').addEventListener('click', () => carousel.next());
   </script>
-    {% if max_viewed_item %}
-        The most viewed shoe today is <a href="{% url 'shoes4show:show_listing' max_viewed_item.slug %}">{{ max_viewed_item.name }}</a> with {{ max_views }} views.
+    {% if most_viewed_today %}
+        The most viewed shoe today is <a href="{% url 'shoes4show:show_listing' most_viewed_today.slug %}">{{ most_viewed_today.name }}</a> with {{ most_viewed_today.views }} views.
     {% else %}
         No shoes have been viewed today.
     {% endif %}
