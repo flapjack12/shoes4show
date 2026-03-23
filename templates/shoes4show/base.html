@@ -20,13 +20,15 @@
 	<link rel="stylesheet" href="{% static 'css/index-carousel.css' %}">
 
     <!-- STYLING CSS -->
-    <div style="background: url('{% static 'images/background.jpg' %}'); min-height: 100vh;">
+
     <style>
     #category{background-color:#ACE1AF; text-dark; border:none; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>"); background-repeat:no-repeat; background-position:right 10px center; background-size:16px; padding-right:30px;}
 	#sorting{background-color:#ACE1AF; text-dark; border:none; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>"); background-repeat:no-repeat; background-position:right 10px center; background-size:16px; padding-right:30px;}
     </style>
     </head>
 
+	<body>
+	<div style="background: url('{% static 'images/background.jpg' %}'); min-height: 100vh;">
 
         <!-- HEADER CONTENT-->
         <header class="py-3">
@@ -106,14 +108,14 @@
 
   	<!-- BODY BLOCK -->
         <div class="container-fluid">
-	    <div class="background">
                 <div class="row">
               
-                <main role="main" class="w-100 px-4 background">		
+                <main role="main" class="w-100 px-4">		
                     {% block body_block %}
-		    {% endblock %}
+		    		{% endblock %}
 		
-
+                </main>
+				</div>
                     <!-- FOOTER -->
                     <footer class="text-center py-3">
 			<!-- NAVBAR OF LINKS -->
@@ -136,8 +138,6 @@
                         <p>&copy; 2026 Lab 5A Copyright &middot; All rights reserved</p>
                     </footer>
 
-                </main>
-            </div>
         </div>
         
         <!-- Bootstrap core JavaScript -->
@@ -146,5 +146,6 @@
         <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
         <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js"></script>
-    </div>
+	</div>
+	</body>
 </html>
