@@ -27,6 +27,7 @@ def index(request):
     context_dict['sorting'] = SORTING_CHOICES
     context_search = request.GET.get('search_context', ["", "none", "none"])
     context_dict['search_context'] = context_search
+    context_dict['is_index'] = True
     visitor_cookie_handler(request)
     return render(request, "shoes4show/index.html", context=context_dict)
 

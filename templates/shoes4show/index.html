@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block body_block %}
-<link rel="stylesheet" href="{% static 'css/index-carousel.css' %}">
+
 <p><strong>{{ boldmessage }}</strong></p>
 
 <div>
@@ -47,18 +47,4 @@
     {% endif %}
 </div>
 
-<div>
-    {% if reviews %}
-        <h2>Recent Reviews</h2>
-        <ul>
-            {% for review in reviews %}
-                <li>
-                    <a href="{{ review.url }}">{{ review.title }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <strong>No reviews available.</strong>
-    {% endif %}
-</div>
 {% endblock %}

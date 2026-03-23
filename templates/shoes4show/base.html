@@ -17,11 +17,13 @@
     <!-- BOOTSTRAP CORE CSS + CUSTOM -->
     <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'css/index-carousel.css' %}">
 
     <!-- STYLING CSS -->
     <div style="background: url('{% static 'images/background.jpg' %}'); min-height: 100vh;">
     <style>
     #category{background-color:#ACE1AF; text-dark; border:none; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>"); background-repeat:no-repeat; background-position:right 10px center; background-size:16px; padding-right:30px;}
+	#sorting{background-color:#ACE1AF; text-dark; border:none; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>"); background-repeat:no-repeat; background-position:right 10px center; background-size:16px; padding-right:30px;}
     </style>
     </head>
 
@@ -38,7 +40,7 @@
 
 			    <!-- LEFT SIDE (Home and boots image) -->
 			    <div class="d-flex flex-column align-items-center mr-3 flex-shrink-0">
-                                <img src="{% static 'images/red_boots.png' %}" alt="Picture of boots" style="height:40px; width:auto;">
+                                 <a href="{% url 'shoes4show:index' %}"><img src="{% static 'images/red_boots.png' %}" alt="Picture of boots" style="height:40px; width:auto;"></a>
 			        <a class="nav-link text-dark" href="{% url 'shoes4show:index' %}">Home</a>
 			    </div>
 
@@ -56,9 +58,7 @@
 
 			        <!-- CATEGORIES -->
                                     <select class="category_choice" id="category" name="category" required="False" onchange="this.form.submit()">
-                                        <option value="none" selected>
-						Categories
-					</option>
+                                    
                                         {% for choice, choice_value in category_choices.items %}
 											{% if search_context and choice == search_context.1 %}
 												<option value="{{choice}}" selected>{{ choice_value }}</option>
@@ -68,7 +68,8 @@
                                         {% endfor %}
                                     </select>
           <!--SORT-->
-					<select class="sorting" name="sorting" required="False">
+		  {% if not is_index %}
+					<select class="sorting" id="sorting" name="sorting" required="False">
 						{% for sorting, sort_value in sorting.items %}
 						{% if search_context|length > 2 and sorting == search_context.2 %}
 							<option value="{{sorting}}" selected> {{sort_value}} </option>
@@ -77,6 +78,7 @@
 						{% endif %}
 						{% endfor %}
             		</select>
+		  {% endif %}
 				    <!-- UPLOAD YOUR OWN -->
 			            <a class="nav-link text-dark ms-auto" href="{% url 'shoes4show:add_listing' %}"><u>+ Upload your own</u></a>
 				</div>
