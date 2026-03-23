@@ -29,23 +29,6 @@ def index(request):
     return render(request, "shoes4show/index.html", context=context_dict)
 
 
-#what is this doing, think its trying to combine two things
-def show_item(request, category_name_slug):
-    context_dict = {}
-
-    try:
-        item = Item.objects.get(slug=category_name_slug)
-        reviews = Review.objects.filter(item=item)
-        context_dict["reviews"] = reviews
-        context_dict["item"] = item
-    except Item.DoesNotExist:
-        context_dict["item"] = None
-        context_dict["reviews"] = None
-
-    return render(request, "shoes4show/category.html", context=context_dict)
-
-
-#confused on names for stuff with categories etc here, copied for my changes jic
 def show_listing(request, shoe_slug):
     context_dict = {}
     
@@ -240,6 +223,7 @@ def search(request):
             "category_choices": CATEGORY_CHOICES,
             "sorting": SORTING_CHOICES,
         }
+        
     return render(request, 'shoes4show/listings.html', context=context_dict)
 
 
