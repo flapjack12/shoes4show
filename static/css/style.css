@@ -1,5 +1,7 @@
 <!-- BASE STYLING -->
-.base_background{background: url('static/images/background.jpg'); no-repeat center center; background-size: cover; min-height: 100vh;}
+.body.base_background{background: url("/static/images/background.jpg"); background-size: cover; min-height: 100vh;}
+
+.base_background{background: url("/static/images/background.jpg"); background-size: cover; min-height: 100vh;}
 
 .base_boots{height:40px; width:auto;}
 
@@ -7,6 +9,8 @@
 .base_hr_custom{border-top: 2px solid black; width:85%;}
 
 .footer_background{background-color: #6a8567}
+
+.container-fluid{background: transparent}
 
 .min_width_0{min-width: 0;}
 
@@ -33,10 +37,8 @@
             }
 
 
-
-
 <!-- LISTINGS STYLING CARDS -->
-.card.listings_cards{background-color: #6a8567; !important;}
+.card.listings_cards{background-color: #6a8567;}
 
-.listings_cards{background-color: #6a8567; !important;}
+.listings_cards{background-color: #6a8567;}
 
