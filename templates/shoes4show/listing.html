@@ -18,10 +18,12 @@
     .productlisting-image{
         max-width: 200px;
         height: auto;
-        align-items: flex-start;
     }
     .productlisting-left{
         width: 30%;
+        display:flex;
+        flex-direction: column;
+        align-items: flex-start;
     }
     .productlisting-right{
         width: 70%;
@@ -56,10 +58,10 @@
                     <p>{{ shoe.uploaded_by.username }}</p>
                 </div>
                 <div class="productlisting-right">
-                    <p>{{ shoe.get_category_display }}</p>
+                    <p>Category: {{ shoe.get_category_display }}</p>
                     <p>{{ shoe.name }}</p>
                     <p>{{ shoe.description }}</p>
-                    <p>{{ shoe.price }}</p>
+                    <p>Price: {{ shoe.price }}</p>
                 </div>
                 <!-- NEED TO INVLUDE AVG RATINGS-->
             </div>

@@ -122,7 +122,9 @@ def add_listing(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save(commit=True)
+            item = form.save(commit=False)
+            item.uploaded_by = request.user
+            item.save()
             return redirect(reverse('shoes4show:index'))
         else:
             print(form.errors)
