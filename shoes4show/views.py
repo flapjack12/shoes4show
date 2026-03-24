@@ -13,9 +13,9 @@ from shoes4show.models import Item, Review, DailyItemView
 from shoes4show.search import run_query
 
 CATEGORY_CHOICES = Item.SHOES_CATEGORIES.copy()
-CATEGORY_CHOICES.update({'none': 'All'})
+CATEGORY_CHOICES.update({'none': 'All Categories'})
 SORTING_CHOICES = Item.SORTING_OPTIONS.copy()
-SORTING_CHOICES.update({'none': 'None'})
+SORTING_CHOICES.update({'none': 'Filter'})
 
 
 def index(request):
