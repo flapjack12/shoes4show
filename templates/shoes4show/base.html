@@ -4,151 +4,174 @@
 
 <html lang="en">
 
-
     <!-- HEAD STYLING -->
     <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v3.8.5">
-    <link rel="icon" type="image/png" href="{% static 'images/red_boots.png' %}">
-	
-    <!-- BOOTSTRAP CORE CSS + CUSTOM -->
-    <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-	<link rel="stylesheet" href="{% static 'css/index-carousel.css' %}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="generator" content="Jekyll v3.8.5">
+        <link rel="icon" type="image/png" href="{% static 'images/red_boots.png' %}">
 
+        <!-- BOOTSTRAP CORE CSS + CUSTOM -->
+        <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/index-carousel.css' %}">
 
-    {% block css %}
-    {% endblock %}
+        {% block css %}
+        {% endblock %}
 
-    <!-- STYLING CSS -->
-    <style>
-    #category{background-color:#6a8567; text-dark; border:none; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>"); background-repeat:no-repeat; background-position:right 10px center; background-size:16px; padding-right:30px;}
-	#sorting{background-color:#6a8567; text-dark; border:none; appearance:none; background-image:url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>"); background-repeat:no-repeat; background-position:right 10px center; background-size:16px; padding-right:30px;}
-    </style>
+        <style>
+            #category {
+                background-color: #6a8567;
+                border: none;
+                appearance: none;
+                background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+                background-size: 16px;
+                padding-right: 30px;
+            }
+
+            #sorting {
+                background-color: #6a8567;
+                border: none;
+                appearance: none;
+                background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+                background-size: 16px;
+                padding-right: 30px;
+            }
+        </style>
+
+        <title>
+            Shoes4Show -
+            {% block title_block %}
+                Home
+            {% endblock %}
+        </title>
     </head>
 
-	<body>
-	<div style="background: url('{% static 'images/background.jpg' %}'); min-height: 100vh;">
+    <body>
+        <div style="background: url('{% static 'images/background.jpg' %}'); min-height: 100vh;">
 
-        <!-- HEADER CONTENT-->
-        <header class="py-3">
+            <!-- HEADER CONTENT-->
+            <header class="py-3">
 
-        	<!-- TITLE -->
-                    <p class="text-center">Shoes4Show</p>
+                <!-- TITLE -->
+                <p class="text-center">Shoes4Show</p>
 
-		    <!-- NAVBAR -->
-		    <nav class="navbar navbar-expand-lg w-100">
-  			<div class="container-fluid d-flex align-items-start w-100 px-4">
+                <!-- NAVBAR -->
+                <nav class="navbar navbar-expand-lg w-100">
+                    <div class="container-fluid d-flex align-items-start w-100 px-4">
 
-			    <!-- LEFT SIDE (Home and boots image) -->
-			    <div class="d-flex flex-column align-items-center mr-3 flex-shrink-0">
-                                 <a href="{% url 'shoes4show:index' %}"><img src="{% static 'images/red_boots.png' %}" alt="Picture of boots" style="height:40px; width:auto;"></a>
-			        <a class="nav-link text-dark" href="{% url 'shoes4show:index' %}">Home</a>
-			    </div>
+                        <!-- LEFT SIDE (Home and boots image) -->
+                        <div class="d-flex flex-column align-items-center mr-3 flex-shrink-0">
+                            <a href="{% url 'shoes4show:index' %}">
+                                <img src="{% static 'images/red_boots.png' %}" alt="Picture of boots" style="height:40px; width:auto;">
+                            </a>
+                            <a class="nav-link text-dark" href="{% url 'shoes4show:index' %}">Home</a>
+                        </div>
 
-			    <!-- MIDDLE (Search, categories and upload) -->
-			    <div class="d-flex flex-column flex-grow-1 mx-2 w-100" style="min-width:0;">
-			    <!-- SEARCH -->
-			        <form method="get" action="{% url 'shoes4show:search' %}" class="w-100">
-						{% if search_context and search_context.0 != '' %}
-                            <input class="form-control w-100" type="text" name="query" id="query" value={{search_context.0}} placeholder="Search" spellcheck="true"/>
-						{% else %}
-							<input class="form-control w-100" type="text" name="query" id="query" placeholder="Search" spellcheck="true"/>
-						{% endif %}
-						<button type="submit">Search</button>
-				<div class="d-flex justify-content-between align-items-center w-100 mt-1">
+                        <!-- MIDDLE (Search, categories and upload) -->
+                        <div class="d-flex flex-column flex-grow-1 mx-2 w-100" style="min-width:0;">
+                            <form method="get" action="{% url 'shoes4show:search' %}" class="w-100">
+                                {% if search_context and search_context.0 != '' %}
+                                    <input class="form-control w-100" type="text" name="query" id="query" value="{{ search_context.0 }}" placeholder="Search" spellcheck="true">
+                                {% else %}
+                                    <input class="form-control w-100" type="text" name="query" id="query" placeholder="Search" spellcheck="true">
+                                {% endif %}
 
-			        <!-- CATEGORIES -->
-                                    <select class="category_choice" id="category" name="category" required="False" onchange="this.form.submit()">
-                                    
+                                <button type="submit">Search</button>
+
+                                <div class="d-flex justify-content-between align-items-center w-100 mt-1">
+                                    <select class="category_choice" id="category" name="category" onchange="this.form.submit()">
                                         {% for choice, choice_value in category_choices.items %}
-											{% if search_context and choice == search_context.1 %}
-												<option value="{{choice}}" selected>{{ choice_value }}</option>
-											{% else %}
-												<option value="{{choice}}">{{ choice_value }}</option>
-											{% endif %}
+                                            {% if search_context and choice == search_context.1 %}
+                                                <option value="{{ choice }}" selected>{{ choice_value }}</option>
+                                            {% else %}
+                                                <option value="{{ choice }}">{{ choice_value }}</option>
+                                            {% endif %}
                                         {% endfor %}
                                     </select>
-          <!--SORT-->
-		  {% if is_search %}
-					<select class="sorting" id="sorting" name="sorting" required="False">
-						{% for sorting, sort_value in sorting.items %}
-						{% if search_context|length > 2 and sorting == search_context.2 %}
-							<option value="{{sorting}}" selected> {{sort_value}} </option>
-						{% else %}
-							<option value="{{sorting}}"> {{sort_value}} </option>
-						{% endif %}
-						{% endfor %}
-            		</select>
-		  {% endif %}
-				    <!-- UPLOAD YOUR OWN -->
-			            <a class="nav-link text-dark ms-auto" href="{% url 'shoes4show:add_listing' %}"><u>+ Upload your own</u></a>
-				</div>
-                                </form>
-			</div>
-  
-			    <!-- RIGHT SIDE (login and register if loops) -->
-			    <div class="d-flex flex-column align-items-center ml-3 flex-shrink-0">
-			        <a class="nav-link text-dark" href="{% url 'shoes4show:login' %}">Login</a>
-				<hr class="my-1" style="border-top:2px solid black; width:85%;">
-        	                <a class="nav-link text-dark" href="{% url 'shoes4show:register' %}">Register</a>
-			    </div>
 
-				<!-- HANDLING SMALLER SCREENS (needs altering a lot) -->
-    				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-     					<span class="navbar-toggler-icon"></span>
-    				</button>
-    				<div class="collapse navbar-collapse" id="navbarContent">
-				<!-- add collapsible nav links?? -->
-    				</div>
-  			</div>
-   		    </nav>
-        </header>
-	
+                                    {% if is_search %}
+                                        <select class="sorting" id="sorting" name="sorting">
+                                            {% for sorting_key, sort_value in sorting.items %}
+                                                {% if search_context|length > 2 and sorting_key == search_context.2 %}
+                                                    <option value="{{ sorting_key }}" selected>{{ sort_value }}</option>
+                                                {% else %}
+                                                    <option value="{{ sorting_key }}">{{ sort_value }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
 
-  	<!-- BODY BLOCK -->
-        <div class="container-fluid">
+                                    {% if user.is_authenticated %}
+                                        <a class="nav-link text-dark ms-auto" href="{% url 'shoes4show:add_listing' %}"><u>+ Upload your own</u></a>
+                                    {% else %}
+                                        <a class="nav-link text-dark ms-auto" href="{% url 'shoes4show:login' %}?next={% url 'shoes4show:add_listing' %}"><u>+ Upload your own</u></a>
+                                    {% endif %}
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- RIGHT SIDE -->
+                        <div class="d-flex flex-column align-items-center ml-3 flex-shrink-0">
+                            {% if user.is_authenticated %}
+                                <a class="nav-link text-dark" href="{% url 'shoes4show:logout' %}">Logout</a>
+                                <hr class="my-1" style="border-top:2px solid black; width:85%;">
+                                <a class="nav-link text-dark" href="{% url 'shoes4show:account' %}">{{ user.username }}</a>
+                            {% else %}
+                                <a class="nav-link text-dark" href="{% url 'shoes4show:login' %}">Login</a>
+                                <hr class="my-1" style="border-top:2px solid black; width:85%;">
+                                <a class="nav-link text-dark" href="{% url 'shoes4show:register' %}">Register</a>
+                            {% endif %}
+                        </div>
+
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarContent">
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+            <div class="container-fluid">
                 <div class="row">
-              
-                <main role="main" class="w-100 px-4">		
-                    {% block body_block %}
-		    		{% endblock %}
-		
-                </main>
-				</div>
-                    <!-- FOOTER -->
-                    <footer class="text-center py-3">
-			<!-- NAVBAR OF LINKS -->
-			<nav class="navbar navbar-expand-lg" style="background-color: #6a8567;">
-  			    <div class="container-fluid">
-    				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-     					<span class="navbar-toggler-icon"></span>
-    				</button>
-    				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      					<div class="navbar-nav w-100 justify-content-between">
-       					<a class="nav-link text-dark" href="{% url 'shoes4show:about' %}">About us</a>
-       					<a class="nav-link text-dark" href="{% url 'shoes4show:shoe_size_conversion' %}">Shoe size Conversion</a>
-        				<a class="nav-link text-dark" href="{% url 'shoes4show:site_map' %}">Site map</a>
-        				<a class="nav-link text-dark" href="{% url 'shoes4show:contact_us' %}">Contact us</a>
-     					 </div>
-    				</div>
-  			    </div>
-   			</nav>
-			<!-- COPYRIGHT -->
-                        <p>&copy; 2026 Lab 5A Copyright &middot; All rights reserved</p>
-                    </footer>
+                    <main role="main" class="w-100 px-4">
+                        {% block body_block %}
+                        {% endblock %}
+                    </main>
+                </div>
 
+                <footer class="text-center py-3">
+                    <nav class="navbar navbar-expand-lg" style="background-color: #6a8567;">
+                        <div class="container-fluid">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                <div class="navbar-nav w-100 justify-content-between">
+                                    <a class="nav-link text-dark" href="{% url 'shoes4show:about' %}">About us</a>
+                                    <a class="nav-link text-dark" href="{% url 'shoes4show:shoe_size_conversion' %}">Shoe size Conversion</a>
+                                    <a class="nav-link text-dark" href="{% url 'shoes4show:site_map' %}">Site map</a>
+                                    <a class="nav-link text-dark" href="{% url 'shoes4show:contact_us' %}">Contact us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                    <p>&copy; 2026 Lab 5A Copyright &middot; All rights reserved</p>
+                </footer>
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRv+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+            <script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
+            <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js"></script>
         </div>
-        
-        <!-- Bootstrap core JavaScript -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
-        <script src="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.js"></script>
-	</div>
-	</body>
+    </body>
 </html>
