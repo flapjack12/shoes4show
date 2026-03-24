@@ -20,35 +20,10 @@
 
         {% block css %}
         {% endblock %}
-
-        <style>
-            #category {
-                background-color: #6a8567;
-                border: none;
-                appearance: none;
-                background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>");
-                background-repeat: no-repeat;
-                background-position: right 10px center;
-                background-size: 16px;
-                padding-right: 30px;
-            }
-
-            #sorting {
-                background-color: #6a8567;
-                border: none;
-                appearance: none;
-                background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>");
-                background-repeat: no-repeat;
-                background-position: right 10px center;
-                background-size: 16px;
-                padding-right: 30px;
-            }
-        </style>
     </head>
 
-
     <body>
-        <div style="background: url('{% static 'images/background.jpg' %}'); no-repeat center center; background-size: cover; min-height: 100vh">
+        <div class="base_background">
 
             <!-- HEADER CONTENT-->
             <header class="py-3">
@@ -63,13 +38,13 @@
                         <!-- LEFT SIDE (Home and boots image) -->
                         <div class="d-flex flex-column align-items-center mr-3 flex-shrink-0">
                             <a href="{% url 'shoes4show:index' %}">
-                                <img src="{% static 'images/red_boots.png' %}" alt="Picture of boots" style="height:40px; width:auto;">
+                                <img class="base_boots" src="{% static 'images/red_boots.png' %}" alt="Picture of boots">
                             </a>
                             <a class="nav-link text-dark" href="{% url 'shoes4show:index' %}">Home</a>
                         </div>
 
                         <!-- MIDDLE (Search, categories and upload) -->
-                        <div class="d-flex flex-column flex-grow-1 mx-2 w-100" style="min-width:0;">
+                        <div class="d-flex flex-column flex-grow-1 mx-2 w-100 min_width_0">
                             <form method="get" action="{% url 'shoes4show:search' %}" class="w-100">
                                 {% if search_context and search_context.0 != '' %}
                                     <input class="form-control w-100" type="text" name="query" id="query" value="{{ search_context.0 }}" placeholder="Search" spellcheck="true">
@@ -113,11 +88,11 @@
                         <div class="d-flex flex-column align-items-center ml-3 flex-shrink-0">
                             {% if user.is_authenticated %}
                                 <a class="nav-link text-dark" href="{% url 'shoes4show:logout' %}">Logout</a>
-                                <hr class="my-1" style="border-top:2px solid black; width:85%;">
+                                <hr class="my-1 base_hr_custom">
                                 <a class="nav-link text-dark" href="{% url 'shoes4show:account' %}">{{ user.username }}</a>
                             {% else %}
                                 <a class="nav-link text-dark" href="{% url 'shoes4show:login' %}">Login</a>
-                                <hr class="my-1" style="border-top:2px solid black; width:85%;">
+                                <hr class="my-1 base_hr_custom">
                                 <a class="nav-link text-dark" href="{% url 'shoes4show:register' %}">Register</a>
                             {% endif %}
                         </div>
@@ -144,7 +119,7 @@
 
 		<!-- FOOTER -->
                 <footer class="text-center py-3">
-                    <nav class="navbar navbar-expand-lg" style="background-color: #6a8567;">
+                    <nav class="navbar navbar-expand-lg footer_background">
                         <div class="container-fluid">
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
