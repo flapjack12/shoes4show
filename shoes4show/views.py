@@ -51,7 +51,7 @@ def show_listing(request, shoe_slug):
 
     try:
         shoe = Item.objects.get(slug=shoe_slug)
-        reviews = Review.objects.filter(item=shoe)
+        reviews = Review.objects.filter(item=shoe).order_by('created_time')
         context_dict["reviews"] = reviews
         context_dict["shoe"] = shoe
         today = timezone.now().date()
@@ -84,6 +84,7 @@ def add_review(request, shoe_slug):
         if form.is_valid():
             review = form.save(commit=False)
             review.item = shoe
+            review.user = request.user
             review.views = 0
             review.save()
             return redirect(
@@ -102,7 +103,12 @@ def add_review(request, shoe_slug):
         "sorting": SORTING_CHOICES,
         "search_context": ["", "none", "none"],
     }
-    return render(request, "shoes4show/add_page.html", context=context_dict)
+    return redirect(
+        reverse(
+            "shoes4show:show_listing",
+            kwargs={"shoe_slug": shoe_slug},
+            )
+        )
 
 
 @login_required

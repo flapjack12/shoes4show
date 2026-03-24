@@ -39,7 +39,7 @@ class ItemForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        exclude = ("item",)
+        fields = ("review_text","rating")
 
 
 class UserForm(UserCreationForm):

@@ -54,6 +54,7 @@ class Item(models.Model):
     views = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
     category = models.CharField(choices=SHOES_CATEGORIES, null=True)
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE, null = True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -67,13 +68,18 @@ class Item(models.Model):
       
     
 class Review(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    title = models.CharField(max_length=128)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name = "reviews")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=128, blank=True, null=True)
+    review_text = models.TextField()
+    rating = models.IntegerField(choices=[(i,i) for i in range(1,6)])
+    created_time = models.DateTimeField(auto_now_add=True)
+    
     url = models.URLField(default='')
     views = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.title
+        return f"{self.title} ({self.rating})"
 
 
 def user_directory_path(instance,filename):
