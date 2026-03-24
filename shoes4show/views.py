@@ -24,7 +24,7 @@ def index(request):
     item_list_3 = Item.objects.order_by('-views')[8:12]
 
     context_dict = {}
-    context_dict['boldmessage'] = "Welcome to Shoes4Show."
+    context_dict['boldmessage'] = "Welcome to Shoes4Show!"
     context_dict['items'] = [item_list_1, item_list_2, item_list_3]
     context_dict['category_choices'] = CATEGORY_CHOICES
     context_dict['sorting'] = SORTING_CHOICES

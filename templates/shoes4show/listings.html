@@ -17,9 +17,10 @@
     {% endif %}
     <ul>
         {% for listing in result_list %}
+
 	<!-- BOOTSTRAP STYLING -->
 	    <a href="{% url 'shoes4show:show_listing' listing.slug %}" class="text-decoration-none text-dark">
-	        <div class="card listings_cards TEST123 mb-3">
+	        <div class="card listings_cards mb-3">
 		    <div class="row no-gutters align-items-center">
 		        <div class="col-md-2">
 			    <img src="{{ listing.image.url }}" class="img-fluid h-100 w-100" style="object-fit: cover;">

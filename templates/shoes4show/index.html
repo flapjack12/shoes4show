@@ -2,12 +2,10 @@
 {% load static %}
 
 {% block body_block %}
-<p><strong>{{ boldmessage }}</strong></p>
-
 <div>
     {% if items %}
-        <h2>Popular Shoes</h2>
-        <div class="w-75 mx-auto">
+        <h2>Most popular shoes:</h2>
+        <div class="w-75 mx-auto mb-5 mt-5">
             <div class="carousel-with-side-buttons">
             <button id="prevBtn" class="carousel-btn" aria-label="Previous">
                     <svg width="256" height="256" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -49,6 +47,7 @@
     document.getElementById('prevBtn').addEventListener('click', () => carousel.prev());
     document.getElementById('nextBtn').addEventListener('click', () => carousel.next());
   </script>
+    <p>{{ boldmessage }}</p>
     {% if most_viewed_today %}
         The most viewed shoe today is <a href="{% url 'shoes4show:show_listing' most_viewed_today.slug %}">{{ most_viewed_today.name }}</a> with {{ most_viewed_today.views }} views.
     {% else %}
