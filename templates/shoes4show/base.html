@@ -44,17 +44,10 @@
                 padding-right: 30px;
             }
         </style>
-
-        <title>
-            Shoes4Show -
-            {% block title_block %}
-                Home
-            {% endblock %}
-        </title>
     </head>
 
-    <body>
 
+    <body>
         <div style="background: url('{% static 'images/background.jpg' %}'); no-repeat center center; background-size: cover; min-height: 100vh">
 
             <!-- HEADER CONTENT-->
@@ -64,7 +57,7 @@
                 <p class="text-center">Shoes4Show</p>
 
                 <!-- NAVBAR -->
-                <nav class="navbar navbar-expand-lg w-100">
+                <nav class="navbar navbar-expand-lg navbar-light w-100">
                     <div class="container-fluid px-4">
 
                         <!-- LEFT SIDE (Home and boots image) -->
@@ -83,7 +76,6 @@
                                 {% else %}
                                     <input class="form-control w-100" type="text" name="query" id="query" placeholder="Search" spellcheck="true">
                                 {% endif %}
-
 
                                 <div class="d-flex justify-content-between align-items-center w-100 mt-1">
                                     <select class="category_choice" id="category" name="category" onchange="this.form.submit()">
@@ -109,9 +101,9 @@
                                     {% endif %}
 
                                     {% if user.is_authenticated %}
-                                        <a class="nav-link text-dark ms-auto" href="{% url 'shoes4show:add_listing' %}"><u>+ Upload your own</u></a>
+                                        <a class="nav-link text-dark ml-auto" href="{% url 'shoes4show:add_listing' %}"><u>+ Upload your own</u></a>
                                     {% else %}
-                                        <a class="nav-link text-dark ms-auto" href="{% url 'shoes4show:login' %}?next={% url 'shoes4show:add_listing' %}"><u>+ Upload your own</u></a>
+                                        <a class="nav-link text-dark ml-auto" href="{% url 'shoes4show:login' %}?next={% url 'shoes4show:add_listing' %}"><u>+ Upload your own</u></a>
                                     {% endif %}
                                 </div>
                             </form>
@@ -130,17 +122,18 @@
                             {% endif %}
                         </div>
 
+			<!-- HANDLING SMALLER SCREENS -->
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
-			<!-- HANDLING SMALLER SCREENS -->
                         <div class="collapse navbar-collapse" id="navbarContent">
                         </div>
                     </div>
                 </nav>
             </header>
 
+	    <!-- BODY -->
             <div class="container-fluid">
                 <div class="row">
                     <main role="main" class="w-100 px-4">
@@ -153,7 +146,7 @@
                 <footer class="text-center py-3">
                     <nav class="navbar navbar-expand-lg" style="background-color: #6a8567;">
                         <div class="container-fluid">
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -170,6 +163,7 @@
                 </footer>
             </div>
 
+	    <!-- SCRIPTS -->
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRv+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
             <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
             <script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
