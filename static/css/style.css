@@ -1,11 +1,11 @@
-<!-- BASE STYLING -->
+/* BASE STYLING */
 .body.base_background{background: url("/static/images/background.jpg"); background-size: cover; min-height: 100vh;}
 
 .base_background{background: url("/static/images/background.jpg"); background-size: cover; min-height: 100vh;}
 
 .base_boots{height:40px; width:auto;}
 
-<!-- LOGIN AND REGISTER RECTANGLES -->
+/* LOGIN AND REGISTER RECTANGLES */
 .base_hr_custom{border-top: 2px solid black; width:85%;}
 
 .footer_background{background-color: #6a8567}
@@ -37,7 +37,7 @@
             }
 
 
-<!-- LISTINGS STYLING CARDS -->
+/* LISTINGS STYLING CARDS */
 .card.listings_cards{background-color: #6a8567;}
 
 .listings_cards{background-color: #6a8567;}
