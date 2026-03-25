@@ -12,13 +12,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="item",
-            name="image",
-            field=models.ImageField(
-                blank=True, upload_to=shoes4show.models.item_image_upload_path
-            ),
-        ),
-        migrations.AlterField(
             model_name="userprofile",
             name="picture",
             field=models.ImageField(

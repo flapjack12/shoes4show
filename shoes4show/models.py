@@ -7,13 +7,6 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxLengthValidator
 import os
-
-def item_image_upload_path(instance, filename):
-    name = slugify(instance.name)
-    ext = filename.split('.')[-1].lower()
-    new_filename = f"{name}.{ext}"
-    return os.path.join('/listing_images/', new_filename)
-  
   
 
 class DailyItemView(models.Model):
@@ -47,7 +40,7 @@ class Item(models.Model):
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
     description = models.TextField(default="default description", validators=[MaxLengthValidator(250)])
     slug = models.SlugField(unique=True)
-    image = models.ImageField(upload_to='listing_images/', blank=False)
+    image = models.ImageField(upload_to='listing_images/item_images/', blank=False)
     price = models.DecimalField(decimal_places=2, max_digits=8, validators=[MinValueValidator(0)], default=0.00)
     views = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
@@ -88,7 +81,6 @@ def user_directory_path(instance,filename):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    website = models.URLField(blank=True)
     picture = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
 
     def __str__(self):
