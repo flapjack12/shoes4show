@@ -1,6 +1,5 @@
 asgiref==3.11.1
 Django==6.0.2
-python==3.12.7
 packaging==24.0
 pillow==12.1.1
 setuptools==82.0.0
