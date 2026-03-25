@@ -156,7 +156,7 @@ STATIC_URL = "/static/"
 # MEDIA FILES
 # -----------------------------
 
-MEDIA_URL = "/media/"
+MEDIA_URL = ""
 MEDIA_ROOT = MEDIA_DIR
 
 

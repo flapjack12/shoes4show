@@ -11,10 +11,8 @@ import os
 def item_image_upload_path(instance, filename):
     name = slugify(instance.name)
     ext = filename.split('.')[-1].lower()
-    unique = uuid.uuid4().hex[:8] 
-    new_filename = f"{name}-{unique}.{ext}"
-    print(new_filename)
-    return os.path.join('media/listing_images/', new_filename)
+    new_filename = f"{name}.{ext}"
+    return os.path.join('/listing_images/', new_filename)
   
   
 
