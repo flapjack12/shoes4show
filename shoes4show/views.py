@@ -12,6 +12,11 @@ from shoes4show.forms import ItemForm, ReviewForm, UserForm, UserProfileForm
 from shoes4show.models import Item, Review, DailyItemView
 from shoes4show.search import run_query
 
+import json
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+
+
 CATEGORY_CHOICES = Item.SHOES_CATEGORIES.copy()
 CATEGORY_CHOICES.update({'none': 'All Categories'})
 SORTING_CHOICES = Item.SORTING_OPTIONS.copy()
@@ -110,6 +115,27 @@ def add_review(request, shoe_slug):
             )
         )
 
+@login_required
+def add_rating(request, shoe_slug):
+    if request.method == "POST":
+        shoe = get_object_or_404(Item, slug=shoe_slug)
+        data = json.loads(request.body)
+        rating = int(data["rating"])
+
+        review, created = Review.objects.get_or_create(
+            item=shoe,
+            user=request.user,
+            default={"rating": rating, "review_text": ""}
+        )
+
+        if not created:
+            review.rating = rating
+            review.save()
+            
+        return JsonResponse({"rating":rating})
+    
+    
+    
 
 @login_required
 def add_listing(request):

@@ -48,6 +48,21 @@
         width: 70%;
         padding: 15px;
     }
+    #ratingbystar .star{
+        font-size: 50px;
+        color:black;
+        cursor:pointer;
+    }
+    #ratingbystar .star-chosen{
+        color:yellow;
+    }
+    .star-display .star{
+        font-size: 30px;
+        color:black;
+    }
+    .star-display .star-chosen{
+        color:yellow;
+    }
 </style>
     {% if shoe %}
         <div class="listingpage-wrapper">
@@ -75,8 +90,17 @@
                     {% for review in reviews %}
                         <div class="review-box">
                             <div class="review-left">
-                                {{review.user.username}}
-                                - {{ review.rating }} 
+                                {{review.user.username}} -
+                                <!-- {{ review.rating }}-->
+                                <div class="star-display">
+                                    {% for i in "12345" %}
+                                        {% if forloop.counter <= review.rating %}
+                                            <span class="star star-chosen">★</span>
+                                        {% else %}
+                                            <span class="star">★</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div> 
                             </div>
                             <div class="review-right">
                                 {{review.review_text}}
@@ -112,14 +136,16 @@
                         {% csrf_token %}
 
                         <label>Rating</label><br>
-                        <select name="rating" required>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-
-                        </select><br><br>
+                        <div id="ratingbystar">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                        <!--Stores star value without user seeing and they cannot submit without clicking on stars-->
+                        <input type="hidden" name="rating" id="star-value" required>
+                        <br><br>
 
                         <label>Your Review:</label><br>
                         <textarea name="review_text" rows="4" cols="40" required></textarea><br><br>
@@ -137,6 +163,47 @@
                 document.getElementById("close-modal").onclick = function(){
                     document.getElementById("review-modal").style.display = "none";
                 };
+            });
+            </script>
+
+            <script>
+            document.addEventListener("DOMContentLoaded", function(){
+                const ratingValue = document.getElementById("star-value"); 
+                //Getiing anything on page that is a star and is a click on
+                const stars = document.querySelectorAll("#ratingbystar .star");
+                let ratingNumber = 0;
+
+                stars.forEach(star => {
+                    star.addEventListener("click", function(){
+                        ratingNumber = parseInt(this.dataset.value);
+                        ratingValue.value = ratingNumber;
+                        updateStars(ratingNumber);
+
+                        //Sends rating to Django without needing to reload page
+                        fetch("{% url 'shoes4show:add_rating' shoe.slug %}", {
+                            method: "POST",
+                            headers:{
+                                "X-CSRFToken": "{{ csrf_token }}",
+                                "Content-Type":"application/json"
+                            },
+                            body: JSON.stringify({ rating: ratingNumber})
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("Rating saved:", data.rating);
+                        })
+                    })
+                })
+                //highlighting the stars dependent on number of stars user rated
+                function updateStars(rating){
+                    stars.forEach(star => {
+                        star.classList.remove("star-chosen");
+                        if(parseInt(star.dataset.value) <= rating){
+                            star.classList.add("star-chosen");
+                        }
+                    })
+                }
+
             });
             </script>
 
