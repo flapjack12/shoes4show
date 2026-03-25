@@ -15,6 +15,7 @@ from shoes4show.search import run_query
 import json
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.db.models import Avg
 
 
 CATEGORY_CHOICES = Item.SHOES_CATEGORIES.copy()
@@ -57,8 +58,18 @@ def show_listing(request, shoe_slug):
     try:
         shoe = Item.objects.get(slug=shoe_slug)
         reviews = Review.objects.filter(item=shoe).order_by('created_time')
+
+        average_rating = reviews.aggregate(average=Avg('rating'))['average']
+        if average_rating is None:
+            average_rating = 0
+        else:
+            average_rating = round(average_rating)
+        count_reviews = reviews.count()
+        
         context_dict["reviews"] = reviews
         context_dict["shoe"] = shoe
+        context_dict["average_rating"] = average_rating
+        context_dict["count_reviews"] = count_reviews
         today = timezone.now().date()
         daily_view, created = DailyItemView.objects.get_or_create(item=shoe, date=today)
         daily_view.count += 1
@@ -68,6 +79,8 @@ def show_listing(request, shoe_slug):
     except Item.DoesNotExist:
         context_dict["shoe"] = None
         context_dict["reviews"] = None
+        context_dict["average_rating"] = 0
+        context_dict["count_reviews"] = 0
 
     return render(request, "shoes4show/listing.html", context=context_dict)
 

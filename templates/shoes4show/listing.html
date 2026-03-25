@@ -63,6 +63,15 @@
     .star-display .star-chosen{
         color:yellow;
     }
+    .rating-summary{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .rating-summary .count-reviews{
+        margin:0;
+        font-size:20px;
+    }
 </style>
     {% if shoe %}
         <div class="listingpage-wrapper">
@@ -77,8 +86,22 @@
                     <p>{{ shoe.name }}</p>
                     <p>{{ shoe.description }}</p>
                     <p>Price: {{ shoe.price }}</p>
+                    <!--  AVG RATINGS-->
+                    <div class = "rating-summary">
+                        <div class="star-display">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= average_rating %}
+                                    <span class="star star-chosen">★</span>
+                                {% else %}
+                                    <span class="star">★</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p class="count-reviews">
+                            {{ count_reviews}}
+                        </p>
+                    </div>
                 </div>
-                <!-- NEED TO INVLUDE AVG RATINGS-->
             </div>
         </div>
 
