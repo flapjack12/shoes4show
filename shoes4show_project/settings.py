@@ -14,7 +14,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
-STATIC_DIR = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = "/home/Sadovyy/shoes4show/static_deployed"
 MEDIA_DIR = os.path.join(BASE_DIR, "media")
 
 
@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-%5)e**-fh0r68#&zp3ebkpqi(w@s7_81*%*@z4m#%9ho1adua)
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["sadovyy.pythonanywhere.com"]
 
 
 # -----------------------------
@@ -146,7 +146,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images) + URLS / MEDIA
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
-STATICFILES_DIRS = [STATIC_DIR, ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/'), ]
 
 STATIC_URL = "/static/"
 
