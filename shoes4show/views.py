@@ -15,7 +15,7 @@ from shoes4show.search import run_query
 import json
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.db.models import Avg,Count
+from django.db.models import Avg, Count
 from django.db.models.query import QuerySet
 
 
@@ -66,7 +66,7 @@ def show_listing(request, shoe_slug):
         else:
             average_rating = round(average_rating)
         count_reviews = reviews.count()
-        
+
         context_dict["reviews"] = reviews
         context_dict["shoe"] = shoe
         context_dict["average_rating"] = average_rating
@@ -126,8 +126,9 @@ def add_review(request, shoe_slug):
         reverse(
             "shoes4show:show_listing",
             kwargs={"shoe_slug": shoe_slug},
-            )
         )
+    )
+
 
 @login_required
 def add_rating(request, shoe_slug):
@@ -139,17 +140,15 @@ def add_rating(request, shoe_slug):
         review, created = Review.objects.get_or_create(
             item=shoe,
             user=request.user,
-            default={"rating": rating, "review_text": ""}
+            defaults={"rating": rating, "review_text": ""}
         )
 
         if not created:
             review.rating = rating
             review.save()
-            
-        return JsonResponse({"rating":rating})
-    
-    
-    
+
+        return JsonResponse({"rating": rating})
+
 
 @login_required
 def add_listing(request):
@@ -250,7 +249,12 @@ def user_login(request):
 def account(request):
     user = request.user
     review_count = Review.objects.filter(user=user).count()
-    
+
+    reviewer_badge_should_be = review_count >= 100
+    if user.userprofile.reviewer_badge != reviewer_badge_should_be:
+        user.userprofile.reviewer_badge = reviewer_badge_should_be
+        user.userprofile.save()
+
     return render(
         request,
         "shoes4show/account.html",
@@ -307,7 +311,7 @@ def visitor_cookie_handler(request):
 def search(request):
     result_list, used_trigram, old_word, new_word, search_context = run_query(request)
 
-    if isinstance(result_list,QuerySet):
+    if isinstance(result_list, QuerySet):
         result_list = result_list.annotate(
             average_rating=Avg('reviews__rating'),
             review_count=Count('reviews')
@@ -317,7 +321,6 @@ def search(request):
             item.average_rating = 0
         else:
             item.average_rating = round(item.average_rating)
-         
 
     context_dict = {
         "result_list": result_list,
@@ -333,12 +336,13 @@ def search(request):
 
     return render(request, 'shoes4show/listings.html', context=context_dict)
 
+
 def about(request):
     context_dict_footer = {}
     context_dict_footer['category_choices'] = CATEGORY_CHOICES
     context_dict_footer['sorting'] = SORTING_CHOICES
     context_dict_footer['search_context'] = ["", "none", "none"]
-    
+
     visitor_cookie_handler(request)
     context_dict_footer['visits'] = request.session.get("visits", 1)
 
@@ -350,7 +354,7 @@ def contact_us(request):
     context_dict_footer['category_choices'] = CATEGORY_CHOICES
     context_dict_footer['sorting'] = SORTING_CHOICES
     context_dict_footer['search_context'] = ["", "none", "none"]
-    
+
     return render(request, 'shoes4show/contact_us.html', context=context_dict_footer)
 
 
@@ -368,5 +372,5 @@ def shoe_size_conversion(request):
     context_dict_footer['category_choices'] = CATEGORY_CHOICES
     context_dict_footer['sorting'] = SORTING_CHOICES
     context_dict_footer['search_context'] = ["", "none", "none"]
-    
+
     return render(request, 'shoes4show/shoe_size_conversion.html', context=context_dict_footer)

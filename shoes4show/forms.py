@@ -39,7 +39,7 @@ class ItemForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ("review_text","rating")
+        fields = ("review_text", "rating")
 
 
 class UserForm(UserCreationForm):
@@ -61,16 +61,18 @@ class UserForm(UserCreationForm):
         max_length=150,
         widget=forms.TextInput(attrs={"class": "form-control"})
     )
-    password = forms.CharField(
+    password1 = forms.CharField(
+        label="Password",
         widget=forms.PasswordInput(attrs={"class": "form-control"})
     )
     password2 = forms.CharField(
+        label="Re-enter password",
         widget=forms.PasswordInput(attrs={"class": "form-control"})
     )
 
     class Meta:
         model = User
-        fields = ("username", "first_name", "last_name", "email", "password", "password2")
+        fields = ("username", "first_name", "last_name", "email", "password1", "password2")
 
 
 class UserProfileForm(forms.ModelForm):
