@@ -317,41 +317,40 @@ def search(request):
 
     return render(request, 'shoes4show/listings.html', context=context_dict)
 
-
 def about(request):
-    context_dict = {}
-    context_dict['category_choices'] = CATEGORY_CHOICES
-    context_dict['sorting'] = SORTING_CHOICES
-    context_dict['search_context'] = ["", "none", "none"]
-
+    context_dict_footer = {}
+    context_dict_footer['category_choices'] = CATEGORY_CHOICES
+    context_dict_footer['sorting'] = SORTING_CHOICES
+    context_dict_footer['search_context'] = ["", "none", "none"]
+    
     visitor_cookie_handler(request)
-    context_dict['visits'] = request.session.get("visits", 1)
+    context_dict_footer['visits'] = request.session.get("visits", 1)
 
-    return render(request, 'shoes4show/about.html', context=context_dict)
+    return render(request, 'shoes4show/about.html', context=context_dict_footer)
 
 
 def contact_us(request):
-    context_dict = {}
-    context_dict['category_choices'] = CATEGORY_CHOICES
-    context_dict['sorting'] = SORTING_CHOICES
-    context_dict['search_context'] = ["", "none", "none"]
-
-    return render(request, 'shoes4show/contact_us.html', context=context_dict)
+    context_dict_footer = {}
+    context_dict_footer['category_choices'] = CATEGORY_CHOICES
+    context_dict_footer['sorting'] = SORTING_CHOICES
+    context_dict_footer['search_context'] = ["", "none", "none"]
+    
+    return render(request, 'shoes4show/contact_us.html', context=context_dict_footer)
 
 
 def site_map(request):
-    context_dict = {}
-    context_dict['category_choices'] = CATEGORY_CHOICES
-    context_dict['sorting'] = SORTING_CHOICES
-    context_dict['search_context'] = ["", "none", "none"]
+    context_dict_footer = {}
+    context_dict_footer['category_choices'] = CATEGORY_CHOICES
+    context_dict_footer['sorting'] = SORTING_CHOICES
+    context_dict_footer['search_context'] = ["", "none", "none"]
 
-    return render(request, 'shoes4show/site_map.html', context=context_dict)
+    return render(request, 'shoes4show/site_map.html', context=context_dict_footer)
 
 
 def shoe_size_conversion(request):
-    context_dict = {}
-    context_dict['category_choices'] = CATEGORY_CHOICES
-    context_dict['sorting'] = SORTING_CHOICES
-    context_dict['search_context'] = ["", "none", "none"]
-
-    return render(request, 'shoes4show/shoe_size_conversion.html', context=context_dict)
+    context_dict_footer = {}
+    context_dict_footer['category_choices'] = CATEGORY_CHOICES
+    context_dict_footer['sorting'] = SORTING_CHOICES
+    context_dict_footer['search_context'] = ["", "none", "none"]
+    
+    return render(request, 'shoes4show/shoe_size_conversion.html', context=context_dict_footer)
