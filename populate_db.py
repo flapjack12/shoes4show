@@ -30,11 +30,18 @@ def populate():
 ]
 
     for item in items:
+        reviews = item.pop("reviews", [])
         image_filename = slugify(item["name"]) + ".jpg"
         image_path = IMAGE_SOURCE_DIR / image_filename
-        add_item(**item, image_path=image_path)
-    
+        added_item = add_item(**item, image_path=image_path)
 
+        for review in reviews:
+            Review.objects.create(
+                item=added_item,
+                rating=review["rating"],
+                review_text=review["review_text"],
+                user=user[0]
+            )
 
 
 def add_item(name, description, category, image_path=None, uploaded_by=None):
@@ -53,3 +60,4 @@ def add_item(name, description, category, image_path=None, uploaded_by=None):
 if __name__ == '__main__':
     print('Starting population script...')
     populate()
+    print('Populated')
