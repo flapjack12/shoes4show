@@ -15,7 +15,8 @@ from shoes4show.search import run_query
 import json
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.db.models import Avg
+from django.db.models import Avg,Count
+from django.db.models.query import QuerySet
 
 
 CATEGORY_CHOICES = Item.SHOES_CATEGORIES.copy()
@@ -303,6 +304,19 @@ def visitor_cookie_handler(request):
 
 def search(request):
     result_list, used_trigram, old_word, new_word, search_context = run_query(request)
+
+    if isinstance(result_list,QuerySet):
+        result_list = result_list.annotate(
+            average_rating=Avg('reviews__rating'),
+            review_count=Count('reviews')
+        )
+    for item in result_list:
+        if item.average_rating is None:
+            item.average_rating = 0
+        else:
+            item.average_rating = round(item.average_rating)
+         
+
     context_dict = {
         "result_list": result_list,
         "old_word": old_word,

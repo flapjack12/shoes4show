@@ -36,8 +36,19 @@
 				    <p class="mb-0">£{{ listing.price }}</p>
 				</div>
 
-				<div style="min-width: 60px; text-align: right;">
-			            <p class="mb-0">ratings{{ listing.rating }}</p> 
+				<div class="rating-summary" style="min-width: 60px; text-align: right;">
+					<p class="mb-0" style="margin-right: 10px;">
+						Ratings: {{ listing.average_rating }} ({{ listing.review_count }})
+					</p>
+					<div class="star-display">
+						{% for i in "12345" %}
+							{% if forloop.counter <= listing.average_rating %}
+								<span class="star star-chosen">★</span>
+							{% else %}
+								<span class="star">★</span>
+							{% endif %}
+						{% endfor %}
+					</div>
 				</div>
 
 			    </div>
