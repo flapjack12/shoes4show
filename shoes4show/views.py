@@ -132,22 +132,31 @@ def add_review(request, shoe_slug):
 
 @login_required
 def add_rating(request, shoe_slug):
-    if request.method == "POST":
-        shoe = get_object_or_404(Item, slug=shoe_slug)
+    if request.method != "POST":
+        return JsonResponse({"error": "Method not allowed."}, status=405)
+
+    shoe = get_object_or_404(Item, slug=shoe_slug)
+
+    try:
         data = json.loads(request.body)
         rating = int(data["rating"])
+    except (json.JSONDecodeError, KeyError, TypeError, ValueError):
+        return JsonResponse({"error": "Invalid rating payload."}, status=400)
 
-        review, created = Review.objects.get_or_create(
-            item=shoe,
-            user=request.user,
-            defaults={"rating": rating, "review_text": ""}
-        )
+    if rating < 1 or rating > 5:
+        return JsonResponse({"error": "Rating must be between 1 and 5."}, status=400)
 
-        if not created:
-            review.rating = rating
-            review.save()
+    review, created = Review.objects.get_or_create(
+        item=shoe,
+        user=request.user,
+        defaults={"rating": rating, "review_text": ""}
+    )
 
-        return JsonResponse({"rating": rating})
+    if not created:
+        review.rating = rating
+        review.save()
+
+    return JsonResponse({"rating": rating})
 
 
 @login_required
