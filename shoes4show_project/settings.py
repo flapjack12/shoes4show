@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
-    "shoes4show",
+    "shoes4show.apps.Shoes4ShowConfig",
 ]
 
 
@@ -111,7 +111,7 @@ DATABASES = {
 }
 
 
-# -----------------------------
+# ---------------------------source--
 # PASSWORD VALIDATION
 # -----------------------------
 
@@ -150,16 +150,13 @@ STATICFILES_DIRS = [STATIC_DIR, ]
 
 STATIC_URL = "/static/"
 
-STATICFILES_DIRS = [
-    STATIC_DIR,
-]
 
 
 # -----------------------------
 # MEDIA FILES
 # -----------------------------
 
-MEDIA_URL = "/media/"
+MEDIA_URL = ""
 MEDIA_ROOT = MEDIA_DIR
 
 

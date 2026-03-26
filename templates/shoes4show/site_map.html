@@ -68,6 +68,13 @@
                     </a>
                 </p>
 
+		<p class="mb-2">
+                    Click here to logout: 
+                    <a class="text-dark" href="{% url 'shoes4show:logout' %}">
+                        {{ request.scheme }}://{{ request.get_host }}{% url 'shoes4show:logout' %}
+                    </a>
+                </p>
+
 		{% else %}
 
 		<p class="mb-2">

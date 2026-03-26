@@ -1,11 +1,13 @@
 {% extends 'shoes4show/base.html' %}
 {% load static %}
 
-{% block title_block %}
-    Search results
+<!-- BOOTSTRAP STYLESHEET FOR SCROLL CARDS + CSS -->
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% endblock %}
 
 {% block body_block %}
+    <h1> Search results: </h1>
     {% if result_list %}
     {% if new_word %}
         <p>Your query: {{ old_word }}</p>
@@ -15,7 +17,46 @@
     {% endif %}
     <ul>
         {% for listing in result_list %}
-            <a href="{% url 'shoes4show:show_listing' listing.slug %}">{{ listing.name }}</a><br>
+
+	<!-- BOOTSTRAP STYLING -->
+	    <a href="{% url 'shoes4show:show_listing' listing.slug %}" class="text-decoration-none text-dark">
+	        <div class="card listings_cards mb-3">
+		    <div class="row no-gutters align-items-center">
+		        <div class="col-md-2">
+			    <img src="{{ listing.image.url }}" class="img-fluid h-100 w-100" style="object-fit: cover;">
+		        </div>
+			
+		        <div class="col-md-10">
+		            <div class="card-body listings_cards d-flex justify-content-between align-items-center">
+			        <div class="flex-grow-1">
+			            <p class="mb-0">{{ listing.name }}</p>
+				</div>
+
+			        <div class="me-4" style="min-width: 80px;">
+				    <p class="mb-0">£{{ listing.price }}</p>
+				</div>
+
+				<div class="rating-summary" style="min-width: 60px; text-align: right;">
+					<p class="mb-0" style="margin-right: 10px;">
+						Ratings: {{ listing.average_rating }} ({{ listing.review_count }})
+					</p>
+					<div class="star-display">
+						{% for i in "12345" %}
+							{% if forloop.counter <= listing.average_rating %}
+								<span class="star star-chosen">★</span>
+							{% else %}
+								<span class="star">★</span>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+
+			    </div>
+		        </div>
+		    </div>
+	          </div>
+	     </a>
+	      
         {% endfor %}
     </ul>
     {% else %}
