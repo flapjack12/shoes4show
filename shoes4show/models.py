@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxLengthValidator
 import os
-  
+from PIL import Image
+
 
 class DailyItemView(models.Model):
     item = models.ForeignKey('Item', on_delete=models.CASCADE)
@@ -16,25 +17,29 @@ class DailyItemView(models.Model):
 
     class Meta:
         unique_together = ('item', 'date')
-        
+
 
 class Item(models.Model):
     NAME_MAX_LENGTH = 128
-    SORTING_OPTIONS = {"price":"price ascending", "-price":"price descending", 
-                       "views":"views ascending", "-views":"views descending"}
+    SORTING_OPTIONS = {
+        "price": "price ascending",
+        "-price": "price descending",
+        "views": "views ascending",
+        "-views": "views descending"
+    }
     SHOES_CATEGORIES = {
-    "HE": "Heels",
-    "SN": "Sneakers",
-    "SA": "Sandals",
-    "BO": "Boots",
-    "LO": "Loafers",
-    "FS": "Formal Shoes",
-    "SL": "Slippers",
-    "FL": "Flats",
-    "PU": "Pumps",
-    "AT": "Athletic Shoes",
-    "CL": "Clogs",
-    "ES": "Espadrilles",
+        "HE": "Heels",
+        "SN": "Sneakers",
+        "SA": "Sandals",
+        "BO": "Boots",
+        "LO": "Loafers",
+        "FS": "Formal Shoes",
+        "SL": "Slippers",
+        "FL": "Flats",
+        "PU": "Pumps",
+        "AT": "Athletic Shoes",
+        "CL": "Clogs",
+        "ES": "Espadrilles",
     }
 
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
@@ -45,7 +50,7 @@ class Item(models.Model):
     views = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
     category = models.CharField(choices=SHOES_CATEGORIES, null=True)
-    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE, null = True)
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -56,16 +61,16 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
-      
-    
+
+
 class Review(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name = "reviews")
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="reviews")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=128, blank=True, null=True)
     review_text = models.TextField()
-    rating = models.IntegerField(choices=[(i,i) for i in range(1,6)])
+    rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
     created_time = models.DateTimeField(auto_now_add=True)
-    
+
     url = models.URLField(default='')
     views = models.IntegerField(default=0)
 
@@ -73,25 +78,47 @@ class Review(models.Model):
         return f"{self.title} ({self.rating})"
 
 
-def user_directory_path(instance,filename):
+def user_directory_path(instance, filename):
     extension = filename.split('.')[-1]
     return f'{instance.user.username}/profilepic/profile.{extension}'
-
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to=user_directory_path, blank=True, null=True)
+    reviewer_badge = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
 
-    def delete(self,*args, **kwargs):
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.picture:
+            image_path = self.picture.path
+
+            if os.path.isfile(image_path):
+                img = Image.open(image_path)
+
+                # Convert to RGB safely for consistent saving
+                if img.mode != "RGB":
+                    img = img.convert("RGB")
+
+                width, height = img.size
+                square_size = min(width, height)
+
+                left = (width - square_size) / 2
+                top = (height - square_size) / 2
+                right = (width + square_size) / 2
+                bottom = (height + square_size) / 2
+
+                img = img.crop((left, top, right, bottom))
+                img = img.resize((400, 400), Image.Resampling.LANCZOS)
+
+                img.save(image_path)
+
+    def delete(self, *args, **kwargs):
         if self.picture and self.picture.path:
             if os.path.isfile(self.picture.path):
                 os.remove(self.picture.path)
         super().delete(*args, **kwargs)
-
-    
-
-

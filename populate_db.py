@@ -16,23 +16,24 @@ user = User.objects.all().filter(id=7)
 
 def populate():
     items = [
-    {"name": "New Balance trainers", "description": "New Balance 530 trainers in white and grey", "category": "SN", "uploaded_by": user[0]},
-    {"name": "adidas slides", "description": "adidas Training Adilette Aqua slides in black", "category": "SA", "uploaded_by": user[0]},
-    {"name": "Dr. Martens boots", "description": "Dr. Martens 1460 smooth leather boots in black", "category": "BO", "uploaded_by": user[0]},
-    {"name": "Gucci loafers", "description": "Gucci horsebit loafers in brown leather", "category": "LO", "uploaded_by": user[0]},
-    {"name": "Clarks oxfords", "description": "Clarks men's formal oxford shoes in tan", "category": "FS", "uploaded_by": user[0]},
-    {"name": "Ugg slippers", "description": "Ugg Scuff slippers in chestnut", "category": "SL", "uploaded_by": user[0]},
+    {"name": "New Balance trainers", "description": "New Balance 530 trainers in white and grey", "category": "SN", "uploaded_by": user[0], "reviews":[{"rating": 5, "review_text": "These are awesome!!"}, {"rating": 5, "review_text": "Nice colour on these. i'd get them."}, {"rating": 4, "review_text": "funky and fashionable"}, {"rating": 5, "review_text": "loveee"}]},
+    {"name": "adidas slides", "description": "adidas Training Adilette Aqua slides in black", "category": "SA", "uploaded_by": user[0], "reviews":[{"rating": 5, "review_text": "Love these."}, {"rating": 3, "review_text": "fell apart on me, dont get."}]},
+    {"name": "Dr. Martens boots", "description": "Dr. Martens 1460 smooth leather boots in black", "category": "BO", "uploaded_by": user[0], "reviews":[{"rating": 4, "review_text": "sturdy and reliable"},{"rating": 5, "review_text": "These are the most durable shoe ever!!!"}, {"rating": 5, "review_text": "to die for i love these!!"}]},
+    {"name": "Gucci loafers", "description": "Gucci horsebit loafers in brown leather", "category": "LO", "uploaded_by": user[0], "reviews":[{"rating": 2, "review_text": "These are sooooo outdated"},{"rating": 4, "review_text": "My dad loves these so i'll do them justice, easily 4 stars."}]},
+    {"name": "Clarks oxfords", "description": "Clarks men's formal oxford shoes in tan", "category": "FS", "uploaded_by": user[0], "reviews":[{"rating": 1, "review_text": "plainn and lame"}]},
+    {"name": "Ugg slippers", "description": "Ugg Scuff slippers in chestnut", "category": "SL", "uploaded_by": user[0], "reviews":[{"rating": 3, "review_text": "These are comfy but boring!!"}, {"rating": 4, "review_text": "good for work"}]},
     {"name": "Tieks flats", "description": "Tieks ballet flats in red", "category": "FL", "uploaded_by": user[0]},
     {"name": "Christian Louboutin pumps", "description": "Christian Louboutin So Kate pumps in black patent", "category": "PU", "uploaded_by": user[0]},
-    {"name": "Nike running shoes", "description": "Nike Air Zoom Pegasus 38 running shoes in blue", "category": "AT", "uploaded_by": user[0]},
+    {"name": "Nike running shoes", "description": "Nike Air Zoom Pegasus 38 running shoes in blue", "category": "AT", "uploaded_by": user[0], "reviews":[{"rating": 4, "review_text": "These are definitley the nicest trainers i've had in a while."}, {"rating": 3, "review_text": "Trendy and durable, i neeed them."}]},
     {"name": "Crocs clogs", "description": "Crocs Classic clogs in navy", "category": "CL", "uploaded_by": user[0]},
-    {"name": "Soludos espadrilles", "description": "Soludos classic espadrilles in natural linen", "category": "ES", "uploaded_by": user[0]},
+    {"name": "Soludos espadrilles", "description": "Soludos classic espadrilles in natural linen", "category": "ES", "uploaded_by": user[0], "reviews":[{"rating": 3, "review_text": "I think these are comfy but not too stylish."}]},
 ]
 
     for item in items:
         image_filename = slugify(item["name"]) + ".jpg"
         image_path = IMAGE_SOURCE_DIR / image_filename
         add_item(**item, image_path=image_path)
+    
 
 
 

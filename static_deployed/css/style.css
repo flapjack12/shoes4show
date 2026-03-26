@@ -1,0 +1,44 @@
+/* BASE STYLING */
+.body.base_background{background: url("/static/images/background.jpg"); background-size: cover; min-height: 100vh;}
+
+.base_background{background: url("/static/images/background.jpg"); background-size: cover; min-height: 100vh;}
+
+.base_boots{height:40px; width:auto;}
+
+/* LOGIN AND REGISTER RECTANGLES */
+.base_hr_custom{border-top: 2px solid black; width:85%;}
+
+.footer_background{background-color: #6a8567}
+
+.container-fluid{background: transparent}
+
+.min_width_0{min-width: 0;}
+
+#category {
+                background-color: #6a8567;
+                border: none;
+                appearance: none;
+                background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+                background-size: 16px;
+                padding-right: 30px;
+            }
+
+#sorting {
+                background-color: #6a8567;
+                border: none;
+                appearance: none;
+                background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>");
+                background-repeat: no-repeat;
+                background-position: right 10px center;
+                background-size: 16px;
+                padding-right: 30px;
+            }
+
+
+/* LISTINGS STYLING CARDS */
+.card.listings_cards{background-color: #6a8567;}
+
+.listings_cards{background-color: #6a8567;}
+
