@@ -83,7 +83,10 @@
     width: 220px;
     height: 220px;
     object-fit: cover;
+    object-position: center;
     border: 1px solid #ddd;
+    display: block;
+    margin: 0 auto;
 }
 
 .account-profile-placeholder {
