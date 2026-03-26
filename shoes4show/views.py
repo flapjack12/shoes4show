@@ -248,12 +248,14 @@ def user_login(request):
 
 @login_required
 def account(request):
+    user = request.user
+    review_count = Review.objects.filter(user=user).count()
+    
     return render(
         request,
         "shoes4show/account.html",
         context={
-            "badge_text": "Badge coming soon",
-            "review_count_text": "Coming soon",
+            "review_count_text": review_count,
             "category_choices": CATEGORY_CHOICES,
             "sorting": SORTING_CHOICES,
             "search_context": ["", "none", "none"],

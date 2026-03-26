@@ -46,8 +46,17 @@
                     {% for review in reviews %}
                         <div class="review-box">
                             <div class="review-left">
-                                {{review.user.username}} -
-                                <!-- {{ review.rating }}-->
+                                <!-- {{review.user.username}} - -->
+                                 {{ review.user.username }}
+
+                                 {% if review.user.userprofile.reviewer_badge %}
+                                    <img src="{% static 'image/diamond.png' %}"
+                                        alt="100 Reviews Badge"
+                                        style="width: 16px; height: 16px; margin-left: 4px;">
+                                {% endif %}
+
+                                -
+
                                 <div class="star-display">
                                     {% for i in "12345" %}
                                         {% if forloop.counter <= review.rating %}

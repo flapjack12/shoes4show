@@ -1,4 +1,5 @@
 {% extends 'shoes4show/base.html' %}
+{% load static %}
 
 {% block title_block %}
 Account
@@ -41,8 +42,17 @@ Account
                 <div class="row justify-content-center mt-4">
                     <div class="col-md-8">
                         <div class="d-flex align-items-center justify-content-center p-3" style="background-color: #d9a193;">
-                            <div class="mr-3" style="font-size: 2rem;">♦</div>
-                            <p class="mb-0" style="font-size: 1.2rem;">{{ badge_text }}</p>
+                            {% if user.userprofile.reviewer_badge %}
+                                <img src="{% static 'images/diamond.png' %}" alt="Top Reviwer Badge" style="width: 20px; height: 20px; margin-right: 12px;">
+
+                                <p class="mb-0" style="font-size: 1.2rem;">
+                                    Congrats! You're a top reviewer!
+                                </p>
+                            {% else %}
+                                <p class="mb-0" style="font-size: 1.2rem;">
+                                    Keep reviewing to earn top reviewer badge!
+                                </p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

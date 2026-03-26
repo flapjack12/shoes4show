@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
-    "shoes4show",
+    "shoes4show.apps.Shoes4ShowConfig",
 ]
 
 
